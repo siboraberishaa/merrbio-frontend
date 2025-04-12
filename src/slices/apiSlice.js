@@ -46,14 +46,14 @@ export const apiSlice = createApi({
           }),
           login: builder.mutation({
             query: (data) => ({
-              url: `/api/users/login/`,
+              url: `/login`,
               method: 'POST',
               body: data,
             }),
           }),
           register: builder.mutation({
             query: (data) => ({
-              url: `/api/users/register/`,
+              url: `/register`,
               method: 'POST',
               body: data,
             }),
