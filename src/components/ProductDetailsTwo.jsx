@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
-import { getCountdown } from '../helper/Countdown';
+import { useGetProductQuery } from '../slices/apiSlice';
 
 const ProductDetailsTwo = () => {
-    const [timeLeft, setTimeLeft] = useState(getCountdown());
+    const { id: productId } = useParams();
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTimeLeft(getCountdown());
-        }, 1000);
+    const { data, isLoading, isError } = useGetProductQuery(productId);
 
-        return () => clearInterval(interval);
-    }, []);
+    const product = data?.product;
+
     const productImages = [
-        "assets/images/thumbs/product-details-two-thumb1.png",
-        "assets/images/thumbs/product-details-two-thumb2.png",
-        "assets/images/thumbs/product-details-two-thumb3.png",
-        "assets/images/thumbs/product-details-two-thumb1.png",
-        "assets/images/thumbs/product-details-two-thumb2.png",
+        "/assets/images/thumbs/product-details-two-thumb1.png",
+        "/assets/images/thumbs/product-details-two-thumb2.png",
+        "/assets/images/thumbs/product-details-two-thumb3.png",
+        "/assets/images/thumbs/product-details-two-thumb1.png",
+        "/assets/images/thumbs/product-details-two-thumb2.png",
     ];
 
 
@@ -68,38 +65,9 @@ const ProductDetailsTwo = () => {
                             </div>
                             <div className="col-xl-6">
                                 <div className="product-details__content">
-                                    <div className="flex-center mb-24 flex-wrap gap-16 bg-color-one rounded-8 py-16 px-24 position-relative z-1">
-                                        <img
-                                            src="assets/images/bg/details-offer-bg.png"
-                                            alt=""
-                                            className="position-absolute inset-block-start-0 inset-inline-start-0 w-100 h-100 z-n1"
-                                        />
-                                        <div className="flex-align gap-16">
-                                            <span className="text-white text-sm">Special Offer:</span>
-                                        </div>
-                                        <div className="countdown" id="countdown11">
-                                            <ul className="countdown-list flex-align flex-wrap">
-                                                <li className="countdown-list__item text-heading flex-align gap-4 text-xs fw-medium w-28 h-28 rounded-4 border border-main-600 p-0 flex-center">
-                                                    {timeLeft.days}<span className="days" />
-                                                </li>
-                                                <li className="countdown-list__item text-heading flex-align gap-4 text-xs fw-medium w-28 h-28 rounded-4 border border-main-600 p-0 flex-center">
-                                                    {timeLeft.hours}<span className="hours" />
-                                                </li>
-                                                <li className="countdown-list__item text-heading flex-align gap-4 text-xs fw-medium w-28 h-28 rounded-4 border border-main-600 p-0 flex-center">
-                                                    {timeLeft.minutes}<span className="minutes" />
-                                                </li>
-                                                <li className="countdown-list__item text-heading flex-align gap-4 text-xs fw-medium w-28 h-28 rounded-4 border border-main-600 p-0 flex-center">
-                                                    {timeLeft.seconds}<span className="seconds" />
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <span className="text-white text-xs">
-                                            Remains untill the end of the offer
-                                        </span>
-                                    </div>
+                                    
                                     <h5 className="mb-12">
-                                        HP Chromebook With Intel Celeron, 4GB Memory &amp; 64GB eMMC -
-                                        Modern Gray
+                                        {product?.name}
                                     </h5>
                                     <div className="flex-align flex-wrap gap-12">
                                         <div className="flex-align gap-12 flex-wrap">
@@ -124,36 +92,24 @@ const ProductDetailsTwo = () => {
                                                 4.7 Star Rating
                                             </span>
                                             <span className="text-sm fw-medium text-gray-500">
-                                                (21,671)
+                                                (22)
                                             </span>
                                         </div>
                                         <span className="text-sm fw-medium text-gray-500">|</span>
                                         <span className="text-gray-900">
                                             {" "}
-                                            <span className="text-gray-400">SKU:</span>EB4DRP{" "}
+                                            <span className="text-gray-400">SKU:&nbsp;</span>EB4DRP{" "}
                                         </span>
                                     </div>
                                     <span className="mt-32 pt-32 text-gray-700 border-top border-gray-100 d-block" />
                                     <p className="text-gray-700">
-                                        Geared up and ready to roll: Get the responsive performance
-                                        you're looking for with an Intel processor and 64 GB eMMC
-                                        storage. Stay productive with compatible apps like Microsoft
-                                        Office, Google Workspace, and more. The Chrome OS gives you a
-                                        fast, simple, and secure online experience with built-in virus
-                                        protection.
+                                        {product?.body}
                                     </p>
                                     <div className="my-32 flex-align gap-16 flex-wrap">
+                                       
                                         <div className="flex-align gap-8">
-                                            <div className="flex-align gap-8 text-main-two-600">
-                                                <i className="ph-fill ph-seal-percent text-xl" />
-                                                -10%
-                                            </div>
-                                            <h6 className="mb-0">USD 320.99</h6>
-                                        </div>
-                                        <div className="flex-align gap-8">
-                                            <span className="text-gray-700">Regular Price</span>
-                                            <h6 className="text-xl text-gray-400 mb-0 fw-medium">
-                                                USD 452.99
+                                            <h6 className="text-xl mb-0 fw-bold">
+                                                {product?.price} &euro;
                                             </h6>
                                         </div>
                                     </div>
@@ -180,66 +136,7 @@ const ProductDetailsTwo = () => {
                                             <i className="ph ph-caret-right" />
                                         </Link>
                                     </div>
-                                    <span className="mt-32 pt-32 text-gray-700 border-top border-gray-100 d-block" />
-                                    <div className="mt-32">
-                                        <h6 className="mb-16">Quick Overview</h6>
-                                        <div className="flex-between align-items-start flex-wrap gap-16">
-                                            <div>
-                                                <span className="text-gray-900 d-block mb-12">
-                                                    Color:
-                                                    <span className="fw-medium">Mineral Silver</span>
-                                                </span>
-                                                <div className="color-list flex-align gap-8">
-                                                    <button
-                                                        type="button"
-                                                        className="color-list__button w-20 h-20 border border-2 border-gray-50 rounded-circle bg-info-600"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        className="color-list__button w-20 h-20 border border-2 border-gray-50 rounded-circle bg-warning-600"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        className="color-list__button w-20 h-20 border border-2 border-gray-50 rounded-circle bg-tertiary-600"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        className="color-list__button w-20 h-20 border border-2 border-gray-50 rounded-circle bg-main-600"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        className="color-list__button w-20 h-20 border border-2 border-gray-50 rounded-circle bg-gray-100"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <span className="text-gray-900 d-block mb-12">
-                                                    Pattern Name:
-                                                    <span className="fw-medium">with offer</span>
-                                                </span>
-                                                <div className="flex-align gap-8 flex-wrap">
-                                                    <Link
-                                                        to="#"
-                                                        className="px-12 py-8 text-sm rounded-8 text-gray-900 border border-gray-200 hover-border-main-600 hover-text-main-600"
-                                                    >
-                                                        with offer{" "}
-                                                    </Link>
-                                                    <Link
-                                                        to="#"
-                                                        className="px-12 py-8 text-sm rounded-8 text-gray-900 border border-gray-200 hover-border-main-600 hover-text-main-600"
-                                                    >
-                                                        12th Gen Laptop
-                                                    </Link>
-                                                    <Link
-                                                        to="#"
-                                                        className="px-12 py-8 text-sm rounded-8 text-gray-900 border border-gray-200 hover-border-main-600 hover-text-main-600"
-                                                    >
-                                                        without offer
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                     <span className="mt-32 pt-32 text-gray-700 border-top border-gray-100 d-block" />
                                     <Link
                                         to="/https://www.whatsapp.com"
@@ -253,7 +150,7 @@ const ProductDetailsTwo = () => {
                                             100% Guarantee Safe Checkout
                                         </span>
                                         <div className="mt-10">
-                                            <img src="assets/images/thumbs/gateway-img.png" alt="" />
+                                            <img src="/assets/images/thumbs/gateway-img.png" alt="" />
                                         </div>
                                     </div>
                                 </div>
@@ -262,34 +159,13 @@ const ProductDetailsTwo = () => {
                     </div>
                     <div className="col-xl-3">
                         <div className="product-details__sidebar py-40 px-32 border border-gray-100 rounded-16">
-                            <div className="mb-32">
-                                <label
-                                    htmlFor="delivery"
-                                    className="h6 activePage mb-8 text-heading fw-semibold d-block"
-                                >
-                                    Delivery
-                                </label>
-                                <div className="flex-align border border-gray-100 rounded-4 px-16">
-                                    <span className="text-xl d-flex text-main-600">
-                                        <i className="ph ph-map-pin" />
-                                    </span>
-                                    <select defaultValue={1}
-                                        className="common-input border-0 px-8 rounded-4"
-                                        id="delivery"
-                                    >
-                                        <option value={1}>Maymansign</option>
-                                        <option value={1}>Khulna</option>
-                                        <option value={1}>Rajshahi</option>
-                                        <option value={1}>Rangpur</option>
-                                    </select>
-                                </div>
-                            </div>
+                            
                             <div className="mb-32">
                                 <label
                                     htmlFor="stock"
                                     className="text-lg mb-8 text-heading fw-semibold d-block"
                                 >
-                                    Total Stock: 21
+                                    Total Stock: {product?.stock}
                                 </label>
                                 <span className="text-xl d-flex">
                                     <i className="ph ph-location" />
@@ -321,11 +197,11 @@ const ProductDetailsTwo = () => {
                             <div className="mb-32">
                                 <div className="flex-between flex-wrap gap-8 border-bottom border-gray-100 pb-16 mb-16">
                                     <span className="text-gray-500">Price</span>
-                                    <h6 className="text-lg mb-0">$150.00</h6>
+                                    <h6 className="text-lg mb-0">{product?.price} &euro;</h6>
                                 </div>
                                 <div className="flex-between flex-wrap gap-8">
                                     <span className="text-gray-500">Shipping</span>
-                                    <h6 className="text-lg mb-0">From $10.00</h6>
+                                    <h6 className="text-lg mb-0">{}</h6>
                                 </div>
                             </div>
                             <Link

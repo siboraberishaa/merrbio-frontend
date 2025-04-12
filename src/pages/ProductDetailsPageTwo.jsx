@@ -1,7 +1,6 @@
 import React from "react";
 import Preloader from "../helper/Preloader";
 import ColorInit from "../helper/ColorInit";
-import HeaderTwo from "../components/HeaderTwo";
 import Breadcrumb from "../components/Breadcrumb";
 import ProductDetailsTwo from "../components/ProductDetailsTwo";
 import NewArrivalTwo from "../components/NewArrivalTwo";
@@ -10,16 +9,15 @@ import NewsletterOne from "../components/NewsletterOne";
 import FooterTwo from "../components/FooterTwo";
 import BottomFooter from "../components/BottomFooter";
 import ScrollToTop from "react-scroll-to-top";
+import HeaderOne from "../components/HeaderOne";
 
 
 const ProductDetailsPageTwo = () => {
 
-
-
   return (
     <>
       {/* ColorInit */}
-      <ColorInit color={true} />
+      <ColorInit color={false} />
 
       {/* ScrollToTop */}
       <ScrollToTop smooth color="#FA6400" />
@@ -28,7 +26,7 @@ const ProductDetailsPageTwo = () => {
       <Preloader />
 
       {/* HeaderTwo */}
-      <HeaderTwo category={true} />
+      <HeaderOne />
 
       {/* Breadcrumb */}
       <Breadcrumb title={"Product Details"} />
