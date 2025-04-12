@@ -320,7 +320,8 @@ const ShopSection = ({products, categories}) => {
                             
                             
                             <div className="shop-sidebar__box rounded-8">
-                                <img src="/assets/images/thumbs/advertise-img1.png" alt="" />
+                                <img src="/assets/images/thumbs/advertise-img1.png" al
+                                t="" />
                             </div>
                         </div>
                     </div>
