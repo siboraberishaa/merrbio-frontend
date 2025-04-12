@@ -12,6 +12,8 @@ import AccountPage from "./pages/AccountPage";
 import BlogPage from "./pages/BlogPage";
 import BlogDetailsPage from "./pages/BlogDetailsPage";
 import ContactPage from "./pages/ContactPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -23,15 +25,24 @@ function App() {
         <Route exact path="/" element={<HomePageOne />} />
         <Route exact path="/index-two" element={<HomePageTwo />} />
         <Route exact path="/shop" element={<ShopPage />} />
-        <Route exact path="/product-details" element={<ProductDetailsPageOne />} />
-        <Route exact path="/product-details-two" element={<ProductDetailsPageTwo />} />
+        <Route
+          exact
+          path="/product-details"
+          element={<ProductDetailsPageOne />}
+        />
+        <Route
+          exact
+          path="/product-details-two"
+          element={<ProductDetailsPageTwo />}
+        />
         <Route exact path="/cart" element={<CartPage />} />
         <Route exact path="/checkout" element={<CheckoutPage />} />
         <Route exact path="/account" element={<AccountPage />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
         <Route exact path="/blog" element={<BlogPage />} />
         <Route exact path="/blog-details" element={<BlogDetailsPage />} />
         <Route exact path="/contact" element={<ContactPage />} />
-
       </Routes>
     </BrowserRouter>
   );

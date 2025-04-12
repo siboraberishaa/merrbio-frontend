@@ -319,35 +319,7 @@ const HeaderOne = () => {
                             </li>
                         </ul>
                         <ul className="header-top__right flex-align flex-wrap">
-                            <li className="on-hover-item border-right-item border-right-item-sm-space has-submenu arrow-white">
-                                <Link to="#" className="text-white text-sm py-8">
-                                    Help Center
-                                </Link>
-                                <ul className="on-hover-dropdown common-dropdown common-dropdown--sm max-h-200 scroll-sm px-0 py-8">
-                                    <li className="nav-submenu__item">
-                                        <Link
-                                            to="#"
-                                            className="nav-submenu__link hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                        >
-                                            <span className="text-sm d-flex">
-                                                <i className="ph ph-headset" />
-                                            </span>
-                                            Call Center
-                                        </Link>
-                                    </li>
-                                    <li className="nav-submenu__item">
-                                        <Link
-                                            to="#"
-                                            className="nav-submenu__link hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                        >
-                                            <span className="text-sm d-flex">
-                                                <i className="ph ph-chat-circle-dots" />
-                                            </span>
-                                            Live Chat
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
+                            
                             <li className="on-hover-item border-right-item border-right-item-sm-space has-submenu arrow-white">
                                 {/* Display the selected language here */}
                                 <Link to="#" className="selected-text text-white text-sm py-8">
@@ -365,7 +337,7 @@ const HeaderOne = () => {
                                                 alt=""
                                                 className="w-16 h-12 rounded-4 border border-gray-100"
                                             />
-                                            English
+                                            En
                                         </Link>
                                     </li>
                                     <li>
@@ -379,162 +351,16 @@ const HeaderOne = () => {
                                                 alt=""
                                                 className="w-16 h-12 rounded-4 border border-gray-100"
                                             />
-                                            Japan
+                                            Al
                                         </Link>
                                     </li>
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleLanguageChange("French")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag3.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            French
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleLanguageChange("Germany")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag4.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            Germany
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleLanguageChange("Bangladesh")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag6.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            Bangladesh
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleLanguageChange("South Korea")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag5.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            South Korea
-                                        </Link>
-                                    </li>
+                                    
                                 </ul>
                             </li>
-                            <li className="on-hover-item border-right-item border-right-item-sm-space has-submenu arrow-white">
-                                {/* Display the selected currency */}
-                                <Link to="#" className="selected-text text-white text-sm py-8">
-                                    {selectedCurrency}
-                                </Link>
-                                <ul className="selectable-text-list on-hover-dropdown common-dropdown common-dropdown--sm max-h-200 scroll-sm px-0 py-8">
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleCurrencyChange("USD")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag1.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            USD
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleCurrencyChange("Yen")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag2.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            Yen
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleCurrencyChange("Franc")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag3.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            Franc
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleCurrencyChange("EURO")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag4.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            EURO
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleCurrencyChange("BDT")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag6.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            BDT
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="#"
-                                            className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                                            onClick={() => handleCurrencyChange("WON")}
-                                        >
-                                            <img
-                                                src="assets/images/thumbs/flag5.png"
-                                                alt=""
-                                                className="w-16 h-12 rounded-4 border border-gray-100"
-                                            />
-                                            WON
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
+                            
                             <li className="border-right-item">
                                 <Link
-                                    to="/account"
+                                    to="/login"
                                     className="text-white text-sm py-8 flex-align gap-6"
                                 >
                                     <span className="icon text-md d-flex">
@@ -542,7 +368,7 @@ const HeaderOne = () => {
                                         <i className="ph ph-user-circle" />{" "}
                                     </span>
                                     <span className="hover-text-decoration-underline">
-                                        My Account
+                                        Login
                                     </span>
                                 </Link>
                             </li>

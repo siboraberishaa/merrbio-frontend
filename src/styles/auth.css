@@ -1,0 +1,290 @@
+.form-floating > .form-control:focus,
+.form-floating > .form-control:not(:placeholder-shown) {
+  background-color: white;
+}
+
+.form-control:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+.btn-primary {
+  transition: all 0.3s ease;
+  background-color: #299e60 !important;
+  border-color: #299e60 !important;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.15);
+}
+
+.card {
+  border-radius: 1rem;
+}
+
+.auth-container {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.auth-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  min-height: 100vh;
+}
+
+.auth-left {
+  background-color: #f2ece1;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3c3c3c;
+}
+
+.brand-section {
+  text-align: center;
+}
+
+.brand-section h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.auth-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+.login-header {
+  margin-bottom: 2.5rem;
+}
+
+.login-header h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2d3436;
+  margin-bottom: 0.5rem;
+}
+
+.login-header p {
+  color: #6c757d;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: white;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #6c757d;
+  box-shadow: 0 0 0 4px rgba(108, 117, 125, 0.1);
+}
+
+.password-group {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 0;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6c757d;
+}
+
+.forgot-link {
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.forgot-link:hover {
+  color: #2d3436;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.875rem;
+  background: #299e60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: transparent;
+  border: 1px solid#299e60 !important;
+  color: #299e60;
+  transform: translateY(-1px);
+}
+
+.signup-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #6c757d;
+}
+
+.signup-text a {
+  color: #299e60 !important;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Additional styles for Register page */
+.terms-section {
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.terms-section small {
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+.terms-section a {
+  color: #2d3436;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.terms-section a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .auth-wrapper {
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+  }
+
+  .auth-left {
+    display: none;
+  }
+
+  .auth-right {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .login-container {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .login-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .login-header p {
+    font-size: 0.9rem;
+  }
+
+  .auth-input {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .submit-btn {
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+
+  .password-toggle {
+    padding: 0.5rem;
+  }
+
+  .form-footer {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .remember-me label {
+    font-size: 0.9rem;
+  }
+
+  .forgot-link {
+    font-size: 0.9rem;
+  }
+
+  .terms-section {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .login-container {
+    padding: 1rem;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .signup-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .auth-container {
+    min-height: auto;
+  }
+
+  .auth-wrapper {
+    min-height: auto;
+  }
+
+  .login-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
