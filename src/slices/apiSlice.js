@@ -23,56 +23,22 @@ export const apiSlice = createApi({
             providesTags: ['Category'],
             keepUnusedDataFor: 5
           }),
-          deleteCategory: builder.mutation({
-            query: (categoryId) => ({
-              url: `/api/categories/delete/category/${categoryId}/`,
-              method: 'DELETE',
-            }),
-            providesTags: ['Category'],
-          }),
-          createCategory: builder.mutation({
-            query: (category) => ({
-              url: `/api/categories/create/category/`,
-              method: 'POST',
-              body: category,
-            }),
-          }),
+          
           getCategory: builder.query({
             query: (categoryId) => ({
               url: `/api/categories/category/${categoryId}/`,
             }),
             keepUnusedDataFor: 5,
           }),
-          categoryUpdate: builder.mutation({
-            query: ({data, categoryId}) => ({
-              url: `/api/categories/update/category/${categoryId}/`,
-              method: 'PUT',
-              body: data,
-              credentials: 'include'
-            }),
-          }),
           getProducts: builder.query({
             query: (category_id) => ({
-              url: `/api/products/get/`, 
+              url: `/products`, 
               params: category_id ? { category_id } : {},
             }),
             providesTags: ['Product'],
             keepUnusedDataFor: 5,
           }),          
-        getProductsAdmin: builder.query({
-            query: () => ({
-              url: `/api/products/`,
-            }),
-            providesTags: ['Product'],
-            keepUnusedDataFor: 5
-          }),
-        getRecentProducts: builder.query({
-            query: () => ({
-              url: `/api/products/recent/`,
-            }),
-            providesTags: ['Product'],
-            keepUnusedDataFor: 5
-          }),
+        
           getProduct: builder.query({
             query: (productId) => ({
               url: `/api/products/product/${productId}/`,

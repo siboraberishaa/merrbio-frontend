@@ -461,10 +461,29 @@ const HeaderOne = () => {
                     <nav className="header-inner d-flex justify-content-between gap-8">
                         <div className="flex-align menu-category-wrapper">
                             {/* Category Dropdown Start */}
-                            <div className="category on-hover-item">
-                               
+                            <div className="category on-hover-item ">
+                                <button
+                                    onClick={handleCategoryToggle}
+                                    type="button"
+                                    className="category__button flex-align gap-8 fw-medium p-16 border-end border-start border-gray-100 text-heading"
+                                >
+                                    <span className="icon text-2xl d-xs-flex d-none">
+                                        <i className="ph ph-dots-nine" />
+                                    </span>
+                                    <span className="d-sm-flex d-none">All</span> Categories
+                                    <span className="arrow-icon text-xl d-flex">
+                                        <i className="ph ph-caret-down" />
+                                    </span>
+                                </button>
                                 <div className={`responsive-dropdown cat on-hover-dropdown common-dropdown nav-submenu p-0 submenus-submenu-wrapper ${activeCategory && "active"}`}>
-                                    
+                                    <button
+                                        onClick={() => { handleCategoryToggle(); setActiveIndexCat(null) }}
+                                        type="button"
+                                        className="close-responsive-dropdown rounded-circle text-xl position-absolute inset-inline-end-0 inset-block-start-0 mt-4 me-8 d-lg-none d-flex"
+                                    >
+                                        {" "}
+                                        <i className="ph ph-x" />{" "}
+                                    </button>
                                     {/* Logo Start */}
                                     <div className="logo px-16 d-lg-none d-block">
                                         <Link to="/" className="link">

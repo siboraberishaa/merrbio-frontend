@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ReactSlider from 'react-slider'
 
-const ShopSection = () => {
+const ShopSection = ({products, categories}) => {
 
     let [grid, setGrid] = useState(false)
 
@@ -12,7 +12,7 @@ const ShopSection = () => {
     }
 
 
-
+    
 
     return (
         <section className="shop py-80">
@@ -30,113 +30,20 @@ const ShopSection = () => {
                             </button>
                             <div className="shop-sidebar__box border border-gray-100 rounded-8 p-32 mb-32">
                                 <h6 className="text-xl border-bottom border-gray-100 pb-24 mb-24">
-                                    Product Category
+                                    Product Categories
                                 </h6>
                                 <ul className="max-h-540 overflow-y-auto scroll-sm">
-                                    <li className="mb-24">
+                                    {categories?.map((category) => (
+                                    <li key={category.id} className="mb-24">
                                         <Link
                                             to="/product-details-two"
                                             className="text-gray-900 hover-text-main-600"
                                         >
-                                            Mobile &amp; Accessories (12)
+                                            {category.name}
                                         </Link>
                                     </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Laptop (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Electronics (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Smart Watch (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Storage (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Portable Devices (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Action Camera (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Smart Gadget (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Monitor (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Smart TV (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Camera (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-24">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Monitor Stand (12)
-                                        </Link>
-                                    </li>
-                                    <li className="mb-0">
-                                        <Link
-                                            to="/product-details-two"
-                                            className="text-gray-900 hover-text-main-600"
-                                        >
-                                            Headphone (12)
-                                        </Link>
-                                    </li>
+                                    ))}
+                                    
                                 </ul>
                             </div>
                             <div className="shop-sidebar__box border border-gray-100 rounded-8 p-32 mb-32">
@@ -170,7 +77,7 @@ const ShopSection = () => {
                                 </div>
                             </div>
 
-                            <div className="shop-sidebar__box border border-gray-100 rounded-8 p-32 mb-32">
+                            {/* <div className="shop-sidebar__box border border-gray-100 rounded-8 p-32 mb-32">
                                 <h6 className="text-xl border-bottom border-gray-100 pb-24 mb-24">
                                     Filter by Rating
                                 </h6>
@@ -409,205 +316,11 @@ const ShopSection = () => {
                                     </div>
                                     <span className="text-gray-900 flex-shrink-0">2</span>
                                 </div>
-                            </div>
-                            <div className="shop-sidebar__box border border-gray-100 rounded-8 p-32 mb-32">
-                                <h6 className="text-xl border-bottom border-gray-100 pb-24 mb-24">
-                                    Filter by Color
-                                </h6>
-                                <ul className="max-h-540 overflow-y-auto scroll-sm">
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio checked-black">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="color1"
-                                            />
-                                            <label className="form-check-label" htmlFor="color1">
-                                                Black(12)
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio checked-primary">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="color2"
-                                            />
-                                            <label className="form-check-label" htmlFor="color2">
-                                                Blue (12)
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio checked-gray">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="color3"
-                                            />
-                                            <label className="form-check-label" htmlFor="color3">
-                                                Gray (12)
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio checked-success">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="color4"
-                                            />
-                                            <label className="form-check-label" htmlFor="color4">
-                                                Green (12)
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio checked-danger">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="color5"
-                                            />
-                                            <label className="form-check-label" htmlFor="color5">
-                                                Red (12)
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio checked-white">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="color6"
-                                            />
-                                            <label className="form-check-label" htmlFor="color6">
-                                                White (12)
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-0">
-                                        <div className="form-check common-check common-radio checked-purple">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="color7"
-                                            />
-                                            <label className="form-check-label" htmlFor="color7">
-                                                Purple (12)
-                                            </label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="shop-sidebar__box border border-gray-100 rounded-8 p-32 mb-32">
-                                <h6 className="text-xl border-bottom border-gray-100 pb-24 mb-24">
-                                    Filter by Brand
-                                </h6>
-                                <ul className="max-h-540 overflow-y-auto scroll-sm">
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="brand1"
-                                            />
-                                            <label className="form-check-label" htmlFor="brand1">
-                                                Apple
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="brand2"
-                                            />
-                                            <label className="form-check-label" htmlFor="brand2">
-                                                Samsung
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="brand3"
-                                            />
-                                            <label className="form-check-label" htmlFor="brand3">
-                                                Microsoft
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="brand4"
-                                            />
-                                            <label className="form-check-label" htmlFor="brand4">
-                                                Apple
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="brand5"
-                                            />
-                                            <label className="form-check-label" htmlFor="brand5">
-                                                HP
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-24">
-                                        <div className="form-check common-check common-radio">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="DELL"
-                                            />
-                                            <label className="form-check-label" htmlFor="DELL">
-                                                DELL
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li className="mb-0">
-                                        <div className="form-check common-check common-radio">
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="color"
-                                                id="Redmi"
-                                            />
-                                            <label className="form-check-label" htmlFor="Redmi">
-                                                Redmi
-                                            </label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            </div> */}
+                            
+                            
                             <div className="shop-sidebar__box rounded-8">
-                                <img src="assets/images/thumbs/advertise-img1.png" alt="" />
+                                <img src="/assets/images/thumbs/advertise-img1.png" alt="" />
                             </div>
                         </div>
                     </div>
@@ -661,7 +374,7 @@ const ShopSection = () => {
                             <div className="product-card h-100 p-16 border border-gray-100 hover-border-main-600 rounded-16 position-relative transition-2">
                                 <Link
                                     to="/product-details-two"
-                                    className="product-card__thumb flex-center rounded-8 bg-gray-50 position-relative"
+                                    className="product-card__thumb flex-center rounded-8 position-relative"
                                 >
                                     <img
                                         src="assets/images/thumbs/product-two-img1.png"
