@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import query from 'jquery';
 import { Link, NavLink } from 'react-router-dom';
+import { useGetCategoriesQuery } from '../slices/apiSlice';
 
 const HeaderOne = () => {
     const [scroll, setScroll] = useState(false)
+
+
+    const { data: categories, isLoading, isError } = useGetCategoriesQuery()
+
+
     useEffect(() => {
         window.onscroll = () => {
             if (window.pageYOffset < 150) {
@@ -456,28 +462,9 @@ const HeaderOne = () => {
                         <div className="flex-align menu-category-wrapper">
                             {/* Category Dropdown Start */}
                             <div className="category on-hover-item">
-                                <button
-                                    onClick={handleCategoryToggle}
-                                    type="button"
-                                    className="category__button flex-align gap-8 fw-medium p-16 border-end border-start border-gray-100 text-heading"
-                                >
-                                    <span className="icon text-2xl d-xs-flex d-none">
-                                        <i className="ph ph-dots-nine" />
-                                    </span>
-                                    <span className="d-sm-flex d-none">All</span> Categories
-                                    <span className="arrow-icon text-xl d-flex">
-                                        <i className="ph ph-caret-down" />
-                                    </span>
-                                </button>
+                               
                                 <div className={`responsive-dropdown cat on-hover-dropdown common-dropdown nav-submenu p-0 submenus-submenu-wrapper ${activeCategory && "active"}`}>
-                                    <button
-                                        onClick={() => { handleCategoryToggle(); setActiveIndexCat(null) }}
-                                        type="button"
-                                        className="close-responsive-dropdown rounded-circle text-xl position-absolute inset-inline-end-0 inset-block-start-0 mt-4 me-8 d-lg-none d-flex"
-                                    >
-                                        {" "}
-                                        <i className="ph ph-x" />{" "}
-                                    </button>
+                                    
                                     {/* Logo Start */}
                                     <div className="logo px-16 d-lg-none d-block">
                                         <Link to="/" className="link">
@@ -772,85 +759,17 @@ const HeaderOne = () => {
                                     </li>
                                     <li className="on-hover-item nav-menu__item">
                                         <Link to="/shop" className="nav-menu__link">
-                                            Shop
+                                            All
                                         </Link>
                                     </li>
-                                    <li className="on-hover-item nav-menu__item has-submenu">
-                                        <Link to="#" className="nav-menu__link">
-                                            Pages
+                                    {categories?.categories?.slice(0,10).map((category) => (
+                                    <li key={category.id} className="on-hover-item nav-menu__item">
+                                        <Link to={`/shop/${category.id}`} className="nav-menu__link">
+                                            {category.name}
                                         </Link>
-                                        <ul className="on-hover-dropdown common-dropdown nav-submenu scroll-sm">
-                                            <li className="common-dropdown__item nav-submenu__item">
-                                                <NavLink
-                                                    to="/cart"
-                                                    className={(navData) =>
-                                                        navData.isActive ? "common-dropdown__link nav-submenu__link hover-bg-neutral-100 activePage" : "common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                                                    }
-                                                >
-                                                    {" "}
-                                                    Cart
-                                                </NavLink>
-                                            </li>
-                                            <li className="common-dropdown__item nav-submenu__item">
-                                                <NavLink
-                                                    to="/checkout"
-                                                    className={(navData) =>
-                                                        navData.isActive ? "common-dropdown__link nav-submenu__link hover-bg-neutral-100 activePage" : "common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                                                    }
-                                                >
-                                                    {" "}
-                                                    Checkout{" "}
-                                                </NavLink>
-                                            </li>
-                                            <li className="common-dropdown__item nav-submenu__item">
-                                                <NavLink
-                                                    to="/account"
-                                                    className={(navData) =>
-                                                        navData.isActive ? "common-dropdown__link nav-submenu__link hover-bg-neutral-100 activePage" : "common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                                                    }
-                                                >
-                                                    {" "}
-                                                    Account
-                                                </NavLink>
-                                            </li>
-                                        </ul>
                                     </li>
-                                    <li className="on-hover-item nav-menu__item has-submenu">
-                                        <Link to="#" className="nav-menu__link">
-                                            Blog
-                                        </Link>
-                                        <ul className="on-hover-dropdown common-dropdown nav-submenu scroll-sm">
-                                            <li className="common-dropdown__item nav-submenu__item">
-                                                <NavLink
-                                                    to="/blog"
-                                                    className={(navData) =>
-                                                        navData.isActive ? "common-dropdown__link nav-submenu__link hover-bg-neutral-100 activePage" : "common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                                                    }
-                                                >
-                                                    {" "}
-                                                    Blog
-                                                </NavLink>
-                                            </li>
-                                            <li className="common-dropdown__item nav-submenu__item">
-                                                <NavLink
-                                                    to="/blog-details"
-                                                    className={(navData) =>
-                                                        navData.isActive ? "common-dropdown__link nav-submenu__link hover-bg-neutral-100 activePage" : "common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                                                    }
-                                                >
-                                                    {" "}
-                                                    Blog Details
-                                                </NavLink>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li className="nav-menu__item">
-                                        <NavLink to="/contact" className={(navData) =>
-                                            navData.isActive ? "nav-menu__link activePage" : "nav-menu__link"
-                                        }>
-                                            Contact Us
-                                        </NavLink>
-                                    </li>
+                                    ))}
+                                      
                                 </ul>
                                 {/* Nav Menu End */}
                             </div>

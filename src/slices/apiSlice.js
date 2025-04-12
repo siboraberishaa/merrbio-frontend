@@ -4,7 +4,7 @@ import { BASE_URL } from '../constants'
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
+    baseUrl: "https://merrbio.laravel.cloud/api",
     prepareHeaders: (headers, { getState }) => {
       const { userInfo } = getState().auth;
       if (userInfo && userInfo.token) {
@@ -12,15 +12,13 @@ export const apiSlice = createApi({
       }
       return headers;
     },
-    credentials: 'include'
-  }),
-  
-      
+    // credentials: 'include'
+  }),  
     tagTypes: ['Product', 'User', 'Category', 'Partner', 'Contact', 'Newsletter', 'Review'],
     endpoints: (builder) => ({
         getCategories: builder.query({
             query: () => ({
-              url: `/api/categories/`,
+              url: `/categorys`,
             }),
             providesTags: ['Category'],
             keepUnusedDataFor: 5
