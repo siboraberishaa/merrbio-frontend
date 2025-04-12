@@ -10,6 +10,7 @@ import ScrollToTop from "react-scroll-to-top";
 import HeaderOne from "../components/HeaderOne";
 import FooterOne from "../components/FooterOne";
 import { useGetCategoriesQuery, useGetProductsQuery } from "../slices/apiSlice";
+import ShippingOne from "../components/ShippingOne";
 
 const ShopPage = () => {
 
@@ -38,8 +39,7 @@ const ShopPage = () => {
       {/* ShopSection */}
       <ShopSection products={products?.products} categories={categories?.categories} />
 
-      {/* ShippingTwo */}
-      <ShippingTwo />
+      <ShippingOne />
 
       {/* FooterTwo */}
       <FooterOne />
