@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
+import { useGetProductsQuery } from "../slices/apiSlice";
 const BannerOne = () => {
 
     function SampleNextArrow(props) {
@@ -16,7 +17,7 @@ const BannerOne = () => {
     }
     function SamplePrevArrow(props) {
         const { className, onClick } = props;
-
+        const { data:products, isLoading, error } = useGetProductsQuery();
         return (
 
             <button

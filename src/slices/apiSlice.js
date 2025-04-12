@@ -36,7 +36,7 @@ export const apiSlice = createApi({
               params: category_id ? { category_id } : {},
             }),
             providesTags: ['Product'],
-            keepUnusedDataFor: 5,
+            keepUnusedDataFor: 5, 
           }),          
           getProduct: builder.query({
             query: (productId) => ({

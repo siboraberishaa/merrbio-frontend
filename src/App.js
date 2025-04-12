@@ -14,6 +14,8 @@ import BlogDetailsPage from "./pages/BlogDetailsPage";
 import ContactPage from "./pages/ContactPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
         <Route exact path="/blog" element={<BlogPage />} />
         <Route exact path="/blog-details" element={<BlogDetailsPage />} />
         <Route exact path="/contact" element={<ContactPage />} />
+        <Route exact path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route exact path="/about" element={<AboutPage />} />
       </Routes>
     </BrowserRouter>
   );
