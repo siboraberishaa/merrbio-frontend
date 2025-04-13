@@ -243,12 +243,20 @@ const HeaderOne = () => {
                   activeIndex === 0 ? "d-block" : ""
                 }`}
               >
-                <Link
-                  to={`${userInfo ? "/account" : "/login"}`}
-                  className="nav-menu__link"
-                >
-                  {userInfo ? "My Account" : "Login"}
-                </Link>
+                {userInfo ? (
+                  <a
+                    href="https://merrbio.laravel.cloud/app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="nav-menu__link"
+                  >
+                    My Account
+                  </a>
+                ) : (
+                  <Link to="/login" className="nav-menu__link">
+                    Login
+                  </Link>
+                )}
               </li>
 
               {/* Contact Us Menu */}
@@ -338,17 +346,33 @@ const HeaderOne = () => {
               </li>
 
               <li className="border-right-item">
-                <Link
-                  to={userInfo ? "/account" : "/login"}
-                  className="text-white text-sm py-8 flex-align gap-6"
-                >
-                  <span className="icon text-md d-flex">
-                    <i className="ph ph-user-circle" />
-                  </span>
-                  <span className="hover-text-decoration-underline">
-                    {userInfo ? t("header.myAccount") : t("header.login")}
-                  </span>
-                </Link>
+                {userInfo ? (
+                  <a
+                    href="https://merrbio.laravel.cloud/app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white text-sm py-8 flex-align gap-6"
+                  >
+                    <span className="icon text-md d-flex">
+                      <i className="ph ph-user-circle" />
+                    </span>
+                    <span className="hover-text-decoration-underline">
+                      {t("header.myAccount")}
+                    </span>
+                  </a>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="text-white text-sm py-8 flex-align gap-6"
+                  >
+                    <span className="icon text-md d-flex">
+                      <i className="ph ph-user-circle" />
+                    </span>
+                    <span className="hover-text-decoration-underline">
+                      {t("header.login")}
+                    </span>
+                  </Link>
+                )}
               </li>
             </ul>
           </div>
@@ -563,7 +587,6 @@ const HeaderOne = () => {
             </div>
             {/* Header Right start */}
             <div className="header-right flex-align">
-             
               <div className="me-16 d-lg-none d-block">
                 <div className="flex-align flex-wrap gap-12">
                   <button
