@@ -253,9 +253,17 @@ const HeaderOne = () => {
                     My Account
                   </a>
                 ) : (
-                  <Link to="/login" className="nav-menu__link">
-                    Login
-                  </Link>
+                  <a
+                    href="http://127.0.0.1:8000/app"
+                    className="text-white text-sm py-8 flex-align gap-6"
+                  >
+                    <span className="icon text-md d-flex">
+                      <i className="ph ph-user-circle" />
+                    </span>
+                    <span className="hover-text-decoration-underline">
+                      {t("header.login")}
+                    </span>
+                  </a>
                 )}
               </li>
 
@@ -361,8 +369,8 @@ const HeaderOne = () => {
                     </span>
                   </a>
                 ) : (
-                  <Link
-                    to="/login"
+                  <a
+                    href="http://127.0.0.1:8000/app"
                     className="text-white text-sm py-8 flex-align gap-6"
                   >
                     <span className="icon text-md d-flex">
@@ -371,7 +379,7 @@ const HeaderOne = () => {
                     <span className="hover-text-decoration-underline">
                       {t("header.login")}
                     </span>
-                  </Link>
+                  </a>
                 )}
               </li>
             </ul>

@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "sass": "^1.71.1",
+    "serve": "^14.2.4",
     "webpack": "^5.90.3"
   }
 }
