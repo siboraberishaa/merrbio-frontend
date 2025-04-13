@@ -1,44 +1,46 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { updateCart } from '../utils/cartUtils';
+import { createSlice } from "@reduxjs/toolkit";
+import { updateCart } from "../utils/cartUtils";
 
-const initialState = localStorage.getItem('cart')
-  ? JSON.parse(localStorage.getItem('cart'))
-  : { cartItems: [], shippingAddress: {}, paymentMethod: 'Cash' };
+const initialState = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : { cartItems: [], shippingAddress: {}, paymentMethod: "Cash" };
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const { ...item } = action.payload;
+      const item = action.payload;
+      const existingItem = state.cartItems.find((x) => x.id === item.id);
 
-      const existItem = state.cartItems.find((x) => x._id === item._id);
-
-      if (existItem) {
+      if (existingItem) {
+        // Update quantity of existing item with the exact quantity specified
         state.cartItems = state.cartItems.map((x) =>
-          x._id === existItem._id ? item : x
+          x.id === existingItem.id ? { ...x, qty: item.qty } : x
         );
       } else {
+        // Add new item
         state.cartItems = [...state.cartItems, item];
       }
 
-      return updateCart(state, item);
+      return updateCart(state);
     },
     removeFromCart: (state, action) => {
-      state.cartItems = state.cartItems.filter((x) => x._id !== action.payload);
+      // Changed from _id to id to match API response
+      state.cartItems = state.cartItems.filter((x) => x.id !== action.payload);
       return updateCart(state);
     },
     saveShippingAddress: (state, action) => {
       state.shippingAddress = action.payload;
-      localStorage.setItem('cart', JSON.stringify(state));
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     savePaymentMethod: (state, action) => {
       state.paymentMethod = action.payload;
-      localStorage.setItem('cart', JSON.stringify(state));
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     clearCartItems: (state, action) => {
       state.cartItems = [];
-      localStorage.setItem('cart', JSON.stringify(state));
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     resetCart: (state) => (state = initialState),
   },

@@ -563,15 +563,7 @@ const HeaderOne = () => {
             </div>
             {/* Header Right start */}
             <div className="header-right flex-align">
-              <Link
-                to="/tel:01234567890"
-                className="bg-main-600 text-white p-12 h-100 hover-bg-main-800 flex-align gap-8 text-lg d-lg-flex d-none"
-              >
-                <div className="d-flex text-32">
-                  <i className="ph ph-phone-call" />
-                </div>
-                01- 234 567 890
-              </Link>
+             
               <div className="me-16 d-lg-none d-block">
                 <div className="flex-align flex-wrap gap-12">
                   <button

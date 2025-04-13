@@ -29,12 +29,13 @@ const ProductDetailsTwo = () => {
   const [quantity, setQuantity] = useState(1);
   const incrementQuantity = () => {
     if (product && quantity < product.stock) {
-      setQuantity(quantity + 1);
+      setQuantity((prevQty) => prevQty + 1);
     }
   };
+
   const decrementQuantity = () => {
     if (quantity > 1) {
-      setQuantity(quantity - 1);
+      setQuantity((prevQty) => prevQty - 1);
     }
   };
 
@@ -273,7 +274,7 @@ const ProductDetailsTwo = () => {
                   ? t("product.details.addToCart")
                   : t("recommended.unavailable")}
               </Link>
-              
+
               <div className="mt-32">
                 <div className="px-16 py-8 bg-main-50 rounded-8 flex-between gap-24 mb-14">
                   <span className="w-32 h-32 bg-white text-main-600 rounded-circle flex-center text-xl flex-shrink-0">
