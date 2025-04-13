@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import AboutPage from "./pages/AboutPage";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/" element={<HomePageOne />} />
         <Route exact path="/index-two" element={<HomePageTwo />} />
         <Route exact path="/shop" element={<ShopPage />} />
+        <Route exact path="/shop/category/:id" element={<ShopPage />} />
         <Route
           exact
           path="/product-details"
@@ -47,6 +49,7 @@ function App() {
         <Route exact path="/contact" element={<ContactPage />} />
         <Route exact path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route exact path="/about" element={<AboutPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

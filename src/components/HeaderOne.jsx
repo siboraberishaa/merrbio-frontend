@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import query from "jquery";
-import { Link, NavLink } from "react-router-dom";
-import { useGetCategoriesQuery } from "../slices/apiSlice";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useGetCategoriesQuery, useGetProductsQuery } from "../slices/apiSlice";
+import debounce from "lodash/debounce";
+import { useSelector } from "react-redux";
 
 const HeaderOne = () => {
+  const { userInfo } = useSelector((state) => state.auth);
   const [scroll, setScroll] = useState(false);
 
   const { data: categories, isLoading, isError } = useGetCategoriesQuery();
@@ -65,6 +68,43 @@ const HeaderOne = () => {
     setActiveIndexCat(activeIndexCat === index ? null : index);
   };
 
+  // Add these new state variables
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedTerm, setDebouncedTerm] = useState("");
+  const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
+
+  // Create debounced search
+  const debouncedSearch = useCallback(
+    debounce((searchText) => {
+      setDebouncedTerm(searchText);
+    }, 500),
+    []
+  );
+
+  // Only fetch when we have a debounced term
+  const { data: searchResults, isFetching } = useGetProductsQuery(
+    debouncedTerm ? { keyword: debouncedTerm } : undefined,
+    { skip: !debouncedTerm }
+  );
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setShowResults(true);
+    debouncedSearch(value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/shop?keyword=${searchTerm}`);
+      setShowResults(false);
+      setSearchTerm("");
+      setDebouncedTerm("");
+    }
+  };
+
   return (
     <>
       <div className="overlay" />
@@ -72,7 +112,10 @@ const HeaderOne = () => {
         className={`side-overlay ${(menuActive || activeCategory) && "show"}`}
       />
       {/* ==================== Search Box Start Here ==================== */}
-      <form action="#" className={`search-box ${activeSearch && "active"}`}>
+      <form
+        onSubmit={handleSearchSubmit}
+        className={`search-box ${activeSearch && "active"}`}
+      >
         <button
           onClick={handleSearchToggle}
           type="button"
@@ -84,15 +127,58 @@ const HeaderOne = () => {
           <div className="position-relative">
             <input
               type="text"
-              className="form-control py-16 px-24 text-xl rounded-pill pe-64"
-              placeholder="Search for a product or brand"
+              className="form-control py-16 px-24 text-xl pe-64"
+              placeholder="Search for a product"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onFocus={() => setShowResults(true)}
             />
-            <button
-              type="submit"
-              className="w-48 h-48 bg-main-600 rounded-circle flex-center text-xl text-white position-absolute top-50 translate-middle-y inset-inline-end-0 me-8"
-            >
-              <i className="ph ph-magnifying-glass" />
-            </button>
+
+            {/* Search results dropdown */}
+            {showResults && searchTerm && (
+              <div
+                className="position-absolute start-0 end-0 top-100 border border-gray-200 rounded-bottom shadow-lg"
+                style={{ zIndex: 1000, backgroundColor: "#f3faf2" }}
+              >
+                {isFetching ? (
+                  <div className="p-3 text-center">Searching...</div>
+                ) : searchResults?.products?.length > 0 ? (
+                  <ul className="list-unstyled m-0 p-0">
+                    {searchResults.products.map((product) => (
+                      <li key={product.id} className="border-bottom">
+                        <Link
+                          to={`/product-details/${product.id}`}
+                          className="d-flex p-3 text-decoration-none text-dark hover-bg-light"
+                          onClick={() => {
+                            setShowResults(false);
+                            setSearchTerm("");
+                            setDebouncedTerm("");
+                            setActiveSearch(false); // Close mobile search
+                          }}
+                        >
+                          <div>
+                            <div className="fw-bold">{product.name}</div>
+                            <div className="small text-muted">
+                              {product.categorie?.name}
+                            </div>
+                            <div className="text-main">
+                              {product.price}&euro;
+                            </div>
+                          </div>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  searchTerm &&
+                  !isFetching && (
+                    <div className="p-3 text-center text-muted">
+                      No products found
+                    </div>
+                  )
+                )}
+              </div>
+            )}
           </div>
         </div>
       </form>
@@ -123,150 +209,36 @@ const HeaderOne = () => {
               {/* Home Menu */}
               <li
                 onClick={() => handleMenuClick(0)}
-                className={`on-hover-item nav-menu__item has-submenu ${
+                className={`on-hover-item nav-menu__item ${
                   activeIndex === 0 ? "d-block" : ""
                 }`}
               >
-                <Link to="#" className="nav-menu__link">
+                <Link to="/" className="nav-menu__link">
                   Home
                 </Link>
               </li>
-
-              {/* Shop Menu */}
               <li
-                onClick={() => handleMenuClick(1)}
-                className={`on-hover-item nav-menu__item has-submenu ${
-                  activeIndex === 1 ? "d-block" : ""
+                onClick={() => handleMenuClick(0)}
+                className={`on-hover-item nav-menu__item ${
+                  activeIndex === 0 ? "d-block" : ""
                 }`}
               >
-                <Link to="#" className="nav-menu__link">
-                  Shop
+                <Link to="/shop" className="nav-menu__link">
+                  All
                 </Link>
-                <ul
-                  className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${
-                    activeIndex === 1 ? "open" : ""
-                  }`}
-                >
-                  <li className="common-dropdown__item nav-submenu__item">
-                    <Link
-                      to="/shop"
-                      className="common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                      onClick={() => setActiveIndex(null)}
-                    >
-                      {" "}
-                      Shop
-                    </Link>
-                  </li>
-                  <li className="common-dropdown__item nav-submenu__item">
-                    <Link
-                      to="/product-details"
-                      className="common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                      onClick={() => setActiveIndex(null)}
-                    >
-                      {" "}
-                      Shop Details
-                    </Link>
-                  </li>
-                  <li className="common-dropdown__item nav-submenu__item">
-                    <Link
-                      to="/product-details-two"
-                      className="common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                      onClick={() => setActiveIndex(null)}
-                    >
-                      {" "}
-                      Shop Details Two
-                    </Link>
-                  </li>
-                </ul>
               </li>
-
-              {/* Pages Menu */}
               <li
-                onClick={() => handleMenuClick(2)}
-                className={`on-hover-item nav-menu__item has-submenu ${
-                  activeIndex === 2 ? "d-block" : ""
+                onClick={() => handleMenuClick(0)}
+                className={`on-hover-item nav-menu__item ${
+                  activeIndex === 0 ? "d-block" : ""
                 }`}
               >
-                <span className="badge-notification bg-warning-600 text-white text-sm py-2 px-8 rounded-4">
-                  New
-                </span>
-                <Link to="#" className="nav-menu__link">
-                  Pages
-                </Link>
-                <ul
-                  className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${
-                    activeIndex === 2 ? "open" : ""
-                  }`}
+                <Link
+                  to={`${userInfo ? "/account" : "/login"}`}
+                  className="nav-menu__link"
                 >
-                  <li className="common-dropdown__item nav-submenu__item">
-                    <Link
-                      to="/cart"
-                      className="common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                      onClick={() => setActiveIndex(null)}
-                    >
-                      {" "}
-                      Cart
-                    </Link>
-                  </li>
-                  <li className="common-dropdown__item nav-submenu__item">
-                    <Link
-                      to="/checkout"
-                      className="common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                      onClick={() => setActiveIndex(null)}
-                    >
-                      {" "}
-                      Checkout{" "}
-                    </Link>
-                  </li>
-                  <li className="common-dropdown__item nav-submenu__item">
-                    <Link
-                      to="/account"
-                      className="common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                      onClick={() => setActiveIndex(null)}
-                    >
-                      {" "}
-                      Account
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-
-              {/* Blog Menu */}
-              <li
-                onClick={() => handleMenuClick(3)}
-                className={`on-hover-item nav-menu__item has-submenu ${
-                  activeIndex === 3 ? "d-block" : ""
-                }`}
-              >
-                <Link to="#" className="nav-menu__link">
-                  Blog
+                  {userInfo ? "My Account" : "Login"}
                 </Link>
-                <ul
-                  className={`on-hover-dropdown common-dropdown nav-submenu scroll-sm ${
-                    activeIndex === 3 ? "open" : ""
-                  }`}
-                >
-                  <li className="common-dropdown__item nav-submenu__item">
-                    <Link
-                      to="/blog"
-                      className="common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                      onClick={() => setActiveIndex(null)}
-                    >
-                      {" "}
-                      Blog
-                    </Link>
-                  </li>
-                  <li className="common-dropdown__item nav-submenu__item">
-                    <Link
-                      to="/blog-details"
-                      className="common-dropdown__link nav-submenu__link hover-bg-neutral-100"
-                      onClick={() => setActiveIndex(null)}
-                    >
-                      {" "}
-                      Blog Details
-                    </Link>
-                  </li>
-                </ul>
               </li>
 
               {/* Contact Us Menu */}
@@ -277,6 +249,15 @@ const HeaderOne = () => {
                   onClick={() => setActiveIndex(null)}
                 >
                   Contact Us
+                </Link>
+              </li>
+              <li className="nav-menu__item">
+                <Link
+                  to="/privacy-policy"
+                  className="nav-menu__link"
+                  onClick={() => setActiveIndex(null)}
+                >
+                  Privacy Policy
                 </Link>
               </li>
             </ul>
@@ -292,34 +273,19 @@ const HeaderOne = () => {
             <ul className="flex-align flex-wrap d-none d-md-flex">
               <li className="border-right-item">
                 <Link
-                  to="#"
-                  className="text-white text-sm hover-text-decoration-underline"
-                >
-                  Become A Seller
-                </Link>
-              </li>
-              <li className="border-right-item">
-                <Link
                   to="/about"
                   className="text-white text-sm hover-text-decoration-underline"
                 >
                   About us
                 </Link>
               </li>
-              <li className="border-right-item">
-                <Link
-                  to="#"
-                  className="text-white text-sm hover-text-decoration-underline"
-                >
-                  Free Delivery
-                </Link>
-              </li>
+
               <li className="border-right-item">
                 <Link
                   to="/privacy-policy"
                   className="text-white text-sm hover-text-decoration-underline"
                 >
-                  Returns Policy
+                  Privacy Policy
                 </Link>
               </li>
             </ul>
@@ -363,14 +329,15 @@ const HeaderOne = () => {
 
               <li className="border-right-item">
                 <Link
-                  to="/login"
+                  to={userInfo ? "/account" : "/login"}
                   className="text-white text-sm py-8 flex-align gap-6"
                 >
                   <span className="icon text-md d-flex">
-                    {" "}
-                    <i className="ph ph-user-circle" />{" "}
+                    <i className="ph ph-user-circle" />
                   </span>
-                  <span className="hover-text-decoration-underline">Login</span>
+                  <span className="hover-text-decoration-underline">
+                    {userInfo ? "My Account" : "Login"}
+                  </span>
                 </Link>
               </li>
             </ul>
@@ -391,7 +358,7 @@ const HeaderOne = () => {
             {/* Logo End  */}
             {/* form location Start */}
             <form
-              action="#"
+              onSubmit={handleSearchSubmit}
               className="flex-align flex-wrap form-location-wrapper"
             >
               <div className="search-category d-flex h-48 radius-end-0 search-form d-sm-flex d-none">
@@ -400,6 +367,9 @@ const HeaderOne = () => {
                     type="text"
                     className="search-form__input common-input py-13 ps-16 pe-18 pe-44"
                     placeholder="Search for a product or brand"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    onFocus={() => setShowResults(true)}
                   />
                   <button
                     type="submit"
@@ -407,6 +377,51 @@ const HeaderOne = () => {
                   >
                     <i className="ph ph-magnifying-glass" />
                   </button>
+
+                  {/* Search results dropdown */}
+                  {showResults && searchTerm && (
+                    <div
+                      className="position-absolute start-0 end-0 top-100 border border-gray-200 rounded-bottom shadow-lg"
+                      style={{ zIndex: 1000, backgroundColor: "#f3faf2" }}
+                    >
+                      {isFetching ? (
+                        <div className="p-3 text-center">Searching...</div>
+                      ) : searchResults?.products?.length > 0 ? (
+                        <ul className="list-unstyled m-0 p-0">
+                          {searchResults.products.map((product) => (
+                            <li key={product.id} className="border-bottom">
+                              <Link
+                                to={`/product-details/${product.id}`}
+                                className="d-flex p-3 text-decoration-none text-dark hover-bg-light"
+                                onClick={() => {
+                                  setShowResults(false);
+                                  setSearchTerm("");
+                                  setDebouncedTerm("");
+                                }}
+                              >
+                                <div>
+                                  <div className="fw-bold">{product.name}</div>
+                                  <div className="small text-muted">
+                                    {product.categorie?.name}
+                                  </div>
+                                  <div className="text-main">
+                                    {product.price}&euro;
+                                  </div>
+                                </div>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        searchTerm &&
+                        !isFetching && (
+                          <div className="p-3 text-center text-muted">
+                            No products found
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </form>
@@ -461,7 +476,8 @@ const HeaderOne = () => {
           <nav className="header-inner d-flex justify-content-between gap-8">
             <div className="flex-align menu-category-wrapper">
               {/* Category Dropdown Start */}
-              <div className="category on-hover-item ">
+              {/* Hide the original category dropdown on both mobile and desktop */}
+              <div className="category on-hover-item d-lg-none">
                 <button
                   onClick={handleCategoryToggle}
                   type="button"
@@ -494,348 +510,21 @@ const HeaderOne = () => {
                   {/* Logo Start */}
                   <div className="logo px-16 d-lg-none d-block">
                     <Link to="/" className="link">
-                      <img src="assets/images/logo/logo.png" alt="Logo" />
+                      <img src="/assets/images/logo/logo.png" alt="Logo" />
                     </Link>
                   </div>
                   {/* Logo End */}
                   <ul className="scroll-sm p-0 py-8 w-300 max-h-400 overflow-y-auto">
-                    <li
-                      onClick={() => handleCatClick(0)}
-                      className={`has-submenus-submenu ${
-                        activeIndexCat === 0 ? "active" : ""
-                      }`}
-                    >
-                      <Link
-                        onClick={() => setActiveIndexCat(null)}
-                        to="#"
-                        className="text-gray-500 text-15 py-12 px-16 flex-align gap-8 rounded-0"
-                      >
-                        <span className="text-xl d-flex">
-                          <i className="ph ph-carrot" />
-                        </span>
-                        <span>Vegetables &amp; Fruit</span>
-                        <span className="icon text-md d-flex ms-auto">
-                          <i className="ph ph-caret-right" />
-                        </span>
-                      </Link>
-                      <div
-                        className={`submenus-submenu py-16 ${
-                          activeIndexCat === 0 ? "open" : ""
-                        }`}
-                      >
-                        <h6 className="text-lg px-16 submenus-submenu__title">
-                          Vegetables &amp; Fruit
-                        </h6>
-                        <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
-                          <li>
-                            <Link to="/shop">Potato &amp; Tomato 000</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop">Cucumber &amp; Capsicum</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop">Leafy Vegetables</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop">Root Vegetables</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop">Beans &amp; Okra</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop">Cabbage &amp; Cauliflower</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop">Gourd &amp; Drumstick</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop">Specialty</Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li
-                      onClick={() => handleCatClick(1)}
-                      className={`has-submenus-submenu ${
-                        activeIndexCat === 1 ? "active" : ""
-                      }`}
-                    >
-                      <Link
-                        to="#"
-                        className="text-gray-500 text-15 py-12 px-16 flex-align gap-8 rounded-0"
-                      >
-                        <span className="text-xl d-flex">
-                          <i className="ph ph-brandy" />
-                        </span>
-                        <span>Beverages</span>
-                        <span className="icon text-md d-flex ms-auto">
-                          <i className="ph ph-caret-right" />
-                        </span>
-                      </Link>
-                      <div
-                        className={`submenus-submenu py-16 ${
-                          activeIndexCat === 1 ? "open" : ""
-                        }`}
-                      >
-                        <h6 className="text-lg px-16 submenus-submenu__title">
-                          Beverages
-                        </h6>
-                        <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
-                          <li>
-                            <Link to="/shop">Soda &amp; Cocktail Mix </Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Sports &amp; Energy Drinks</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Non Alcoholic Drinks</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Packaged Water </Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Spring Water</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Flavoured Water </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li
-                      onClick={() => handleCatClick(2)}
-                      className={`has-submenus-submenu ${
-                        activeIndexCat === 2 ? "active" : ""
-                      }`}
-                    >
-                      <Link
-                        to="#"
-                        className="text-gray-500 text-15 py-12 px-16 flex-align gap-8 rounded-0"
-                      >
-                        <span className="text-xl d-flex">
-                          <i className="ph ph-brandy" />
-                        </span>
-                        <span>Meats &amp; Seafood</span>
-                        <span className="icon text-md d-flex ms-auto">
-                          <i className="ph ph-caret-right" />
-                        </span>
-                      </Link>
-                      <div
-                        className={`submenus-submenu py-16 ${
-                          activeIndexCat === 2 ? "open" : ""
-                        }`}
-                      >
-                        <h6 className="text-lg px-16 submenus-submenu__title">
-                          Meats &amp; Seafood
-                        </h6>
-                        <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
-                          <li>
-                            <Link to="/shop"> Fresh Meat </Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Frozen Meat</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Marinated Meat</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Fresh &amp; Frozen Meat</Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li
-                      onClick={() => handleCatClick(3)}
-                      className={`has-submenus-submenu ${
-                        activeIndexCat === 3 ? "active" : ""
-                      }`}
-                    >
-                      <Link
-                        to="#"
-                        className="text-gray-500 text-15 py-12 px-16 flex-align gap-8 rounded-0"
-                      >
-                        <span className="text-xl d-flex">
-                          <i className="ph ph-brandy" />
-                        </span>
-                        <span>Breakfast &amp; Dairy</span>
-                        <span className="icon text-md d-flex ms-auto">
-                          <i className="ph ph-caret-right" />
-                        </span>
-                      </Link>
-                      <div
-                        className={`submenus-submenu py-16 ${
-                          activeIndexCat === 3 ? "open" : ""
-                        }`}
-                      >
-                        <h6 className="text-lg px-16 submenus-submenu__title">
-                          Breakfast &amp; Dairy
-                        </h6>
-                        <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
-                          <li>
-                            <Link to="/shop"> Oats &amp; Porridge</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Kids Cereal</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Muesli</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Flakes</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Granola &amp; Cereal Bars</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Instant Noodles</Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li
-                      onClick={() => handleCatClick(4)}
-                      className={`has-submenus-submenu ${
-                        activeIndexCat === 4 ? "active" : ""
-                      }`}
-                    >
-                      <Link
-                        to="#"
-                        className="text-gray-500 text-15 py-12 px-16 flex-align gap-8 rounded-0"
-                      >
-                        <span className="text-xl d-flex">
-                          <i className="ph ph-brandy" />
-                        </span>
-                        <span>Frozen Foods</span>
-                        <span className="icon text-md d-flex ms-auto">
-                          <i className="ph ph-caret-right" />
-                        </span>
-                      </Link>
-                      <div
-                        className={`submenus-submenu py-16 ${
-                          activeIndexCat === 4 ? "open" : ""
-                        }`}
-                      >
-                        <h6 className="text-lg px-16 submenus-submenu__title">
-                          Frozen Foods
-                        </h6>
-                        <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
-                          <li>
-                            <Link to="/shop"> Instant Noodles </Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Hakka Noodles</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Cup Noodles</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Vermicelli</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Instant Pasta</Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li
-                      onClick={() => handleCatClick(5)}
-                      className={`has-submenus-submenu ${
-                        activeIndexCat === 5 ? "active" : ""
-                      }`}
-                    >
-                      <Link
-                        to="#"
-                        className="text-gray-500 text-15 py-12 px-16 flex-align gap-8 rounded-0"
-                      >
-                        <span className="text-xl d-flex">
-                          <i className="ph ph-brandy" />
-                        </span>
-                        <span>Biscuits &amp; Snacks</span>
-                        <span className="icon text-md d-flex ms-auto">
-                          <i className="ph ph-caret-right" />
-                        </span>
-                      </Link>
-                      <div
-                        className={`submenus-submenu py-16 ${
-                          activeIndexCat === 5 ? "open" : ""
-                        }`}
-                      >
-                        <h6 className="text-lg px-16 submenus-submenu__title">
-                          Biscuits &amp; Snacks
-                        </h6>
-                        <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
-                          <li>
-                            <Link to="/shop"> Salted Biscuits </Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Marie, Health, Digestive</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop">
-                              {" "}
-                              Cream Biscuits &amp; Wafers{" "}
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Glucose &amp; Milk biscuits</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Cookies</Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li
-                      onClick={() => handleCatClick(6)}
-                      className={`has-submenus-submenu ${
-                        activeIndexCat === 6 ? "active" : ""
-                      }`}
-                    >
-                      <Link
-                        to="#"
-                        className="text-gray-500 text-15 py-12 px-16 flex-align gap-8 rounded-0"
-                      >
-                        <span className="text-xl d-flex">
-                          <i className="ph ph-brandy" />
-                        </span>
-                        <span>Grocery &amp; Staples</span>
-                        <span className="icon text-md d-flex ms-auto">
-                          <i className="ph ph-caret-right" />
-                        </span>
-                      </Link>
-                      <div
-                        className={`submenus-submenu py-16 ${
-                          activeIndexCat === 6 ? "open" : ""
-                        }`}
-                      >
-                        <h6 className="text-lg px-16 submenus-submenu__title">
-                          Grocery &amp; Staples
-                        </h6>
-                        <ul className="submenus-submenu__list max-h-300 overflow-y-auto scroll-sm">
-                          <li>
-                            <Link to="/shop"> Lemon, Ginger &amp; Garlic </Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Indian &amp; Exotic Herbs</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Orangic Vegetables</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop">Orangic Fruits </Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Orangic Dry Fruits</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Orangic Dals &amp; pulses</Link>
-                          </li>
-                          <li>
-                            <Link to="/shop"> Orangic Millet &amp; Flours</Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
+                    {categories?.categories?.map((category) => (
+                      <li key={category.id} className="border-bottom">
+                        <Link
+                          to={`/shop/category/${category.id}`}
+                          className="text-gray-500 text-15 py-12 px-16 flex-align gap-8 rounded-0"
+                        >
+                          <span>{category.name}</span>
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -843,7 +532,7 @@ const HeaderOne = () => {
               {/* Menu Start  */}
               <div className="header-menu d-lg-block d-none">
                 {/* Nav Menu Start */}
-                <ul className="nav-menu flex-align ">
+                <ul className="nav-menu flex-align">
                   <li className="on-hover-item nav-menu__item">
                     <Link to="/" className="nav-menu__link">
                       Home
@@ -857,14 +546,14 @@ const HeaderOne = () => {
                   {categories?.categories?.slice(0, 10).map((category) => (
                     <li
                       key={category.id}
-                      className="on-hover-item nav-menu__item"
+                      className="on-hover-item nav-menu__item d-lg-block d-none"
                     >
-                      <Link
-                        to={`/shop/${category.id}`}
+                      <a
+                        href={`/shop/category/${category.id}`}
                         className="nav-menu__link"
                       >
                         {category.name}
-                      </Link>
+                      </a>
                     </li>
                   ))}
                 </ul>

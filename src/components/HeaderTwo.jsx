@@ -288,7 +288,7 @@ const HeaderTwo = ({ category }) => {
                                                     onClick={() => handleLanguageChange("English")}
                                                 >
                                                     <img
-                                                        src="assets/images/thumbs/flag1.png"
+                                                        src="/assets/images/thumbs/flag1.png"
                                                         alt="English"
                                                         className="w-16 h-12 rounded-4 border border-gray-100"
                                                     />

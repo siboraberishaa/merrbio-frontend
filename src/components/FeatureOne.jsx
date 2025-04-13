@@ -74,7 +74,7 @@ const FeatureOne = () => {
                       >
                         <img
                           src={`/assets/images/thumbs/${
-                            category.image || "default.png"
+                            category.image || "feature-img1.png"
                           }`}
                           alt={category.name}
                         />
@@ -89,9 +89,9 @@ const FeatureOne = () => {
                           {category.name}
                         </Link>
                       </h6>
-                      <span className="text-sm text-gray-400">
+                      {/* <span className="text-sm text-gray-400">
                         {category.product_count || 0}+ Products
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 ))}
