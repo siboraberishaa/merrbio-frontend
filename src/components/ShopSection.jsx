@@ -2,12 +2,15 @@ import React, { useState, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReactSlider from "react-slider";
 import { useGetCategoryProductsQuery } from "../slices/apiSlice";
+import { useTranslation } from "react-i18next";
 
 const ShopSection = ({ products: allProducts, categories }) => {
   const { id: categoryId } = useParams();
   const { data: categoryData } = useGetCategoryProductsQuery(categoryId, {
     skip: !categoryId,
   });
+
+  const { t } = useTranslation();
 
   // Move useState hooks before any conditional returns
   let [grid, setGrid] = useState(false);
@@ -62,15 +65,17 @@ const ShopSection = ({ products: allProducts, categories }) => {
             <div className="col-md-8 text-center">
               <img
                 src="/assets/images/404.png"
-                alt="Not Found"
+                alt={t("shop.noProducts.title")}
                 className="img-fluid mb-4 w-50"
               />
-              <h2 className="mb-4 text-heading">No Products Found</h2>
+              <h2 className="mb-4 text-heading">
+                {t("shop.noProducts.title")}
+              </h2>
               <p className="mb-4 text-gray-500">
-                We couldn't find any products matching your criteria.
+                {t("shop.noProducts.description")}
               </p>
               <a href="/shop" className="btn btn-main">
-                View All Products
+                {t("shop.noProducts.button")}
               </a>
             </div>
           </div>
@@ -96,7 +101,7 @@ const ShopSection = ({ products: allProducts, categories }) => {
               </button>
               <div className="shop-sidebar__box border border-gray-100 rounded-8 p-32 mb-32">
                 <h6 className="text-xl border-bottom border-gray-100 pb-24 mb-24">
-                  Product Categories
+                  {t("shop.filter.categories")}
                 </h6>
                 <ul className="max-h-540 overflow-y-auto scroll-sm">
                   {categories?.map((category) => (
@@ -113,7 +118,7 @@ const ShopSection = ({ products: allProducts, categories }) => {
               </div>
               <div className="shop-sidebar__box border border-gray-100 rounded-8 p-32 mb-32">
                 <h6 className="text-xl border-bottom border-gray-100 pb-24 mb-24">
-                  Filter by Price
+                  {t("shop.filter.byPrice")}
                 </h6>
                 <div className="custom--range">
                   <ReactSlider
@@ -138,7 +143,10 @@ const ShopSection = ({ products: allProducts, categories }) => {
 
                   <div className="flex-between mt-24">
                     <span className="text-gray-500">
-                      Range: €{priceRange[0]} - €{priceRange[1]}
+                      {t("shop.filter.priceRange", {
+                        min: priceRange[0],
+                        max: priceRange[1],
+                      })}
                     </span>
                   </div>
 
@@ -148,7 +156,7 @@ const ShopSection = ({ products: allProducts, categories }) => {
                       className="btn btn-main h-40 flex-align"
                       onClick={() => setActiveFilters(true)}
                     >
-                      Filter
+                      {t("shop.filter.filterButton")}
                     </button>
                     {activeFilters && (
                       <button
@@ -159,7 +167,7 @@ const ShopSection = ({ products: allProducts, categories }) => {
                           setActiveFilters(false);
                         }}
                       >
-                        Reset
+                        {t("shop.filter.resetButton")}
                       </button>
                     )}
                   </div>
@@ -408,7 +416,7 @@ const ShopSection = ({ products: allProducts, categories }) => {
                             </div> */}
 
               <div className="shop-sidebar__box rounded-8">
-                <img src="/assets/images/thumbs/advertise-img1.png" al t="" />
+                <img src="/assets/images/thumbs/advertise-img1.png" alt="sdjfndjfndjfnjd" />
               </div>
             </div>
           </div>
@@ -418,8 +426,7 @@ const ShopSection = ({ products: allProducts, categories }) => {
             {/* Top Start */}
             <div className="flex-between gap-16 flex-wrap mb-40 ">
               <span className="text-gray-900">
-                Showing {products?.length}{" "}
-                {products?.length === 1 ? "result" : "results"}
+                {t("shop.filter.showing", { count: products?.length })}
               </span>
               <div className="position-relative flex-align gap-16 flex-wrap">
                 <div className="list-grid-btns flex-align gap-16">
@@ -447,7 +454,7 @@ const ShopSection = ({ products: allProducts, categories }) => {
                     htmlFor="sorting"
                     className="text-inherit flex-shrink-0"
                   >
-                    Sort by:{" "}
+                    {t("shop.filter.sortBy")}{" "}
                   </label>
                   <select
                     value={sortBy}
@@ -455,10 +462,14 @@ const ShopSection = ({ products: allProducts, categories }) => {
                     className="form-control common-input px-14 py-14 text-inherit rounded-6 w-auto"
                     id="sorting"
                   >
-                    <option value="popular">Popular</option>
-                    <option value="latest">Latest</option>
-                    <option value="a-z">Name (A-Z)</option>
-                    <option value="z-a">Name (Z-A)</option>
+                    <option value="popular">
+                      {t("shop.filter.sorting.popular")}
+                    </option>
+                    <option value="latest">
+                      {t("shop.filter.sorting.latest")}
+                    </option>
+                    <option value="a-z">{t("shop.filter.sorting.aToZ")}</option>
+                    <option value="z-a">{t("shop.filter.sorting.zToA")}</option>
                   </select>
                 </div>
                 <button
@@ -482,7 +493,7 @@ const ShopSection = ({ products: allProducts, categories }) => {
                     className="product-card__thumb flex-center rounded-8 position-relative"
                   >
                     <img
-                      src="assets/images/thumbs/product-two-img1.png"
+                      src="/assets/images/thumbs/product-two-img1.png"
                       alt=""
                       className="w-auto max-w-unset"
                     />
@@ -516,7 +527,8 @@ const ShopSection = ({ products: allProducts, categories }) => {
                     </div>
                   </div>
                   <button className="product-card__cart w-100 btn bg-gray-50 text-heading hover-bg-main-600 hover-text-white py-11 px-24 rounded-8 flex-center gap-8 fw-medium">
-                    Add To Cart <i className="ph ph-shopping-cart" />
+                    {t("shop.product.addToCart")}{" "}
+                    <i className="ph ph-shopping-cart" />
                   </button>
                 </div>
               ))}

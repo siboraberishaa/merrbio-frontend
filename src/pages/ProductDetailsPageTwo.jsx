@@ -3,13 +3,11 @@ import Preloader from "../helper/Preloader";
 import ColorInit from "../helper/ColorInit";
 import Breadcrumb from "../components/Breadcrumb";
 import ProductDetailsTwo from "../components/ProductDetailsTwo";
-import NewArrivalTwo from "../components/NewArrivalTwo";
 import ShippingOne from "../components/ShippingOne";
-import NewsletterOne from "../components/NewsletterOne";
-import FooterTwo from "../components/FooterTwo";
 import BottomFooter from "../components/BottomFooter";
 import ScrollToTop from "react-scroll-to-top";
 import HeaderOne from "../components/HeaderOne";
+import FooterOne from "../components/FooterOne";
 
 
 const ProductDetailsPageTwo = () => {
@@ -34,17 +32,10 @@ const ProductDetailsPageTwo = () => {
       {/* ProductDetailsTwo */}
       <ProductDetailsTwo />
 
-      {/* NewArrivalTwo */}
-      <NewArrivalTwo />
-
       {/* ShippingOne */}
       <ShippingOne />
 
-      {/* NewsletterOne */}
-      <NewsletterOne />
-
-      {/* FooterTwo */}
-      <FooterTwo />
+      <FooterOne />
 
       {/* BottomFooter */}
       <BottomFooter />

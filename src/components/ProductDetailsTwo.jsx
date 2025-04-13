@@ -3,9 +3,15 @@ import { Link, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import { useGetProductQuery } from "../slices/apiSlice";
 import ContactModal from "./ContactModal";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../slices/cartSlice";
+import { toast } from "react-toastify";
 
 const ProductDetailsTwo = () => {
+  const { t } = useTranslation();
   const { id: productId } = useParams();
+  const dispatch = useDispatch();
 
   const { data, isLoading, isError } = useGetProductQuery(productId);
 
@@ -21,12 +27,44 @@ const ProductDetailsTwo = () => {
 
   // increment & decrement
   const [quantity, setQuantity] = useState(1);
-  const incrementQuantity = () => setQuantity(quantity + 1);
-  const decrementQuantity = () =>
-    setQuantity(quantity > 1 ? quantity - 1 : quantity);
+  const incrementQuantity = () => {
+    if (product && quantity < product.stock) {
+      setQuantity(quantity + 1);
+    }
+  };
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
 
   const [mainImage, setMainImage] = useState(productImages[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const addToCartHandler = () => {
+    if (product && quantity > 0 && quantity <= product.stock) {
+      dispatch(
+        addToCart({
+          ...product,
+          qty: quantity,
+        })
+      );
+      toast.success(`${product.name} added to cart`, {
+        position: "bottom-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.error("Failed to add product to cart", {
+        position: "bottom-right",
+        autoClose: 2000,
+      });
+    }
+  };
 
   const settingsThumbs = {
     dots: false,
@@ -95,18 +133,18 @@ const ProductDetailsTwo = () => {
                         </span>
                       </div>
                       <span className="text-sm fw-medium text-neutral-600">
-                        4.7 Star Rating
+                        {t("product.details.starRating")}
                       </span>
                       <span className="text-sm fw-medium text-gray-500">
-                        (22)
+                        (22 {t("product.details.reviews")})
                       </span>
                     </div>
                     <span className="text-sm fw-medium text-gray-500">|</span>
                     <span className="text-gray-900">
-                      {" "}
                       <span className="text-gray-400">
-                        SKU:&nbsp;
-                      </span>EB4DRP{" "}
+                        {t("product.details.sku")}:&nbsp;
+                      </span>
+                      EB4DRP
                     </span>
                   </div>
                   <span className="mt-32 pt-32 text-gray-700 border-top border-gray-100 d-block" />
@@ -123,21 +161,21 @@ const ProductDetailsTwo = () => {
                       to="#"
                       className="px-12 py-8 text-sm rounded-8 flex-align gap-8 text-gray-900 border border-gray-200 hover-border-main-600 hover-text-main-600"
                     >
-                      Monthyly EMI USD 15.00
+                      {t("product.details.monthlyEmi", { amount: "15.00" })}
                       <i className="ph ph-caret-right" />
                     </Link>
                     <Link
                       to="#"
                       className="px-12 py-8 text-sm rounded-8 flex-align gap-8 text-gray-900 border border-gray-200 hover-border-main-600 hover-text-main-600"
                     >
-                      Shipping Charge
+                      {t("product.details.shippingCharge")}
                       <i className="ph ph-caret-right" />
                     </Link>
                     <Link
                       to="#"
                       className="px-12 py-8 text-sm rounded-8 flex-align gap-8 text-gray-900 border border-gray-200 hover-border-main-600 hover-text-main-600"
                     >
-                      Security &amp; Privacy
+                      {t("product.details.securityPrivacy")}
                       <i className="ph ph-caret-right" />
                     </Link>
                   </div>
@@ -149,10 +187,10 @@ const ProductDetailsTwo = () => {
                       e.preventDefault();
                       setIsModalOpen(true);
                     }}
-                    className="btn btn-black flex-center gap-8 rounded-8 py-16"
+                    className="btn btn-main flex-center gap-8 rounded-8 py-16"
                   >
                     <i className="ph ph-whatsapp-logo text-lg" />
-                    Request More Information
+                    {t("product.details.requestInfo")}
                   </Link>
                   <ContactModal
                     isOpen={isModalOpen}
@@ -161,7 +199,7 @@ const ProductDetailsTwo = () => {
                   />
                   <div className="mt-32">
                     <span className="fw-medium text-gray-900">
-                      100% Guarantee Safe Checkout
+                      {t("product.details.safeCheckout")}
                     </span>
                     <div className="mt-10">
                       <img src="/assets/images/thumbs/gateway-img.png" alt="" />
@@ -178,7 +216,7 @@ const ProductDetailsTwo = () => {
                   htmlFor="stock"
                   className="text-lg mb-8 text-heading fw-semibold d-block"
                 >
-                  Total Stock: {product?.stock}
+                  {t("product.details.totalStock")}: {product?.stock}
                 </label>
                 <span className="text-xl d-flex">
                   <i className="ph ph-location" />
@@ -213,30 +251,36 @@ const ProductDetailsTwo = () => {
                   <h6 className="text-lg mb-0">{product?.price} &euro;</h6>
                 </div>
                 <div className="flex-between flex-wrap gap-8">
-                  <span className="text-gray-500">Shipping</span>
-                  <h6 className="text-lg mb-0">{}</h6>
+                  <span className="text-gray-500">Shipping (Standard)</span>
+                  <h6 className="text-lg mb-0">
+                    {product?.price < 20 ? "2.00" : "0.00"} &euro;
+                  </h6>
                 </div>
               </div>
               <Link
                 to="#"
-                className="btn btn-main flex-center gap-8 rounded-8 py-16 fw-normal mt-48"
+                onClick={(e) => {
+                  e.preventDefault();
+                  addToCartHandler();
+                }}
+                className={`btn btn-main flex-center gap-8 rounded-8 py-16 fw-normal mt-48 ${
+                  !product?.stock ? "disabled opacity-50" : ""
+                }`}
+                disabled={!product?.stock}
               >
                 <i className="ph ph-shopping-cart-simple text-lg" />
-                Add To Cart
+                {product?.stock
+                  ? t("product.details.addToCart")
+                  : t("recommended.unavailable")}
               </Link>
-              <Link
-                to="#"
-                className="btn btn-outline-main rounded-8 py-16 fw-normal mt-16 w-100"
-              >
-                Buy Now
-              </Link>
+              
               <div className="mt-32">
                 <div className="px-16 py-8 bg-main-50 rounded-8 flex-between gap-24 mb-14">
                   <span className="w-32 h-32 bg-white text-main-600 rounded-circle flex-center text-xl flex-shrink-0">
                     <i className="ph-fill ph-truck" />
                   </span>
                   <span className="text-sm text-neutral-600">
-                    Ship from <span className="fw-semibold">MarketPro</span>{" "}
+                    Ship from <span className="fw-semibold">MerrBio</span>{" "}
                   </span>
                 </div>
                 <div className="px-16 py-8 bg-main-50 rounded-8 flex-between gap-24 mb-0">
@@ -245,7 +289,7 @@ const ProductDetailsTwo = () => {
                   </span>
                   <span className="text-sm text-neutral-600">
                     Sold by:{" "}
-                    <span className="fw-semibold">MR Distribution LLC</span>{" "}
+                    <span className="fw-semibold">{product?.user?.name}</span>{" "}
                   </span>
                 </div>
               </div>
@@ -360,43 +404,11 @@ const ProductDetailsTwo = () => {
                 >
                   <div className="mb-40">
                     <h6 className="mb-24">Product Description</h6>
-                    <p>
-                      Wherever celebrations and good times happen, the LAY'S
-                      brand will be there just as it has been for more than 75
-                      years. With flavors almost as rich as our history, we have
-                      a chip or crisp flavor guaranteed to bring a smile on your
-                      face.{" "}
-                    </p>
-                    <p>
-                      Morbi ut sapien vitae odio accumsan gravida. Morbi vitae
-                      erat auctor, eleifend nunc a, lobortis neque. Praesent
-                      aliquam dignissim viverra. Maecenas lacus odio, feugiat eu
-                      nunc sit amet, maximus sagittis dolor. Vivamus nisi
-                      sapien, elementum sit amet eros sit amet, ultricies cursus
-                      ipsum. Sed consequat luctus ligula. Curabitur laoreet
-                      rhoncus blandit. Aenean vel diam ut arcu pharetra
-                      dignissim ut sed leo. Vivamus faucibus, ipsum in
-                      vestibulum vulputate, lorem orci convallis quam, sit amet
-                      consequat nulla felis pharetra lacus. Duis semper erat
-                      mauris, sed egestas purus commodo vel.
-                    </p>
-                    <ul className="list-inside mt-32 ms-16">
-                      <li className="text-gray-400 mb-4">
-                        8.0 oz. bag of LAY'S Classic Potato Chips
-                      </li>
-                      <li className="text-gray-400 mb-4">
-                        Tasty LAY's potato chips are a great snack
-                      </li>
-                      <li className="text-gray-400 mb-4">
-                        Includes three ingredients: potatoes, oil, and salt
-                      </li>
-                      <li className="text-gray-400 mb-4">
-                        Gluten free product
-                      </li>
-                    </ul>
+                    <p>{product?.body}</p>
+
                     <ul className="mt-32">
-                      <li className="text-gray-400 mb-4">Made in USA</li>
-                      <li className="text-gray-400 mb-4">Ready To Eat.</li>
+                      <li className="text-gray-400 mb-4">Made in ALBANIA</li>
+                      <li className="text-gray-400 mb-4">Ready To Eat!</li>
                     </ul>
                   </div>
                   <div className="mb-40">
@@ -408,10 +420,7 @@ const ProductDetailsTwo = () => {
                         </span>
                         <span className="text-heading fw-medium">
                           Product Type:
-                          <span className="text-gray-500">
-                            {" "}
-                            Chips &amp; Dips
-                          </span>
+                          <span className="text-gray-500"> BIO</span>
                         </span>
                       </li>
                       <li className="text-gray-400 mb-14 flex-align gap-14">
@@ -422,7 +431,7 @@ const ProductDetailsTwo = () => {
                           Product Name:
                           <span className="text-gray-500">
                             {" "}
-                            Potato Chips Classic{" "}
+                            {product?.name}{" "}
                           </span>
                         </span>
                       </li>
@@ -432,25 +441,7 @@ const ProductDetailsTwo = () => {
                         </span>
                         <span className="text-heading fw-medium">
                           Brand:
-                          <span className="text-gray-500"> Lay's</span>
-                        </span>
-                      </li>
-                      <li className="text-gray-400 mb-14 flex-align gap-14">
-                        <span className="w-20 h-20 bg-main-50 text-main-600 text-xs flex-center rounded-circle">
-                          <i className="ph ph-check" />
-                        </span>
-                        <span className="text-heading fw-medium">
-                          FSA Eligible:
-                          <span className="text-gray-500"> No</span>
-                        </span>
-                      </li>
-                      <li className="text-gray-400 mb-14 flex-align gap-14">
-                        <span className="w-20 h-20 bg-main-50 text-main-600 text-xs flex-center rounded-circle">
-                          <i className="ph ph-check" />
-                        </span>
-                        <span className="text-heading fw-medium">
-                          Size/Count:
-                          <span className="text-gray-500"> 8.0oz</span>
+                          <span className="text-gray-500"> BIO</span>
                         </span>
                       </li>
                       <li className="text-gray-400 mb-14 flex-align gap-14">
@@ -460,18 +451,6 @@ const ProductDetailsTwo = () => {
                         <span className="text-heading fw-medium">
                           Item Code:
                           <span className="text-gray-500"> 331539</span>
-                        </span>
-                      </li>
-                      <li className="text-gray-400 mb-14 flex-align gap-14">
-                        <span className="w-20 h-20 bg-main-50 text-main-600 text-xs flex-center rounded-circle">
-                          <i className="ph ph-check" />
-                        </span>
-                        <span className="text-heading fw-medium">
-                          Ingredients:
-                          <span className="text-gray-500">
-                            {" "}
-                            Potatoes, Vegetable Oil, and Salt.
-                          </span>
                         </span>
                       </li>
                     </ul>
@@ -526,48 +505,6 @@ const ProductDetailsTwo = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="mb-0">
-                    <h6 className="mb-24">More Details</h6>
-                    <ul className="mt-32">
-                      <li className="text-gray-400 mb-14 flex-align gap-14">
-                        <span className="w-20 h-20 bg-main-50 text-main-600 text-xs flex-center rounded-circle">
-                          <i className="ph ph-check" />
-                        </span>
-                        <span className="text-gray-500">
-                          {" "}
-                          Lunarlon midsole delivers ultra-plush responsiveness
-                        </span>
-                      </li>
-                      <li className="text-gray-400 mb-14 flex-align gap-14">
-                        <span className="w-20 h-20 bg-main-50 text-main-600 text-xs flex-center rounded-circle">
-                          <i className="ph ph-check" />
-                        </span>
-                        <span className="text-gray-500">
-                          {" "}
-                          Encapsulated Air-Sole heel unit for lightweight
-                          cushioning
-                        </span>
-                      </li>
-                      <li className="text-gray-400 mb-14 flex-align gap-14">
-                        <span className="w-20 h-20 bg-main-50 text-main-600 text-xs flex-center rounded-circle">
-                          <i className="ph ph-check" />
-                        </span>
-                        <span className="text-gray-500">
-                          {" "}
-                          Colour Shown: Ale Brown/Black/Goldtone/Ale Brown
-                        </span>
-                      </li>
-                      <li className="text-gray-400 mb-14 flex-align gap-14">
-                        <span className="w-20 h-20 bg-main-50 text-main-600 text-xs flex-center rounded-circle">
-                          <i className="ph ph-check" />
-                        </span>
-                        <span className="text-gray-500">
-                          {" "}
-                          Style: 805899-202
-                        </span>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
                 <div
                   className="tab-pane fade"
@@ -581,7 +518,7 @@ const ProductDetailsTwo = () => {
                       <h6 className="mb-24">Product Description</h6>
                       <div className="d-flex align-items-start gap-24 pb-44 border-bottom border-gray-100 mb-44">
                         <img
-                          src="assets/images/thumbs/comment-img1.png"
+                          src="/assets/images/thumbs/comment-img1.png"
                           alt=""
                           className="w-52 h-52 object-fit-cover rounded-circle flex-shrink-0"
                         />
@@ -636,7 +573,7 @@ const ProductDetailsTwo = () => {
                       </div>
                       <div className="d-flex align-items-start gap-24">
                         <img
-                          src="assets/images/thumbs/comment-img1.png"
+                          src="/assets/images/thumbs/comment-img1.png"
                           alt=""
                           className="w-52 h-52 object-fit-cover rounded-circle flex-shrink-0"
                         />

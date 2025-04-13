@@ -1,7 +1,10 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const FooterOne = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer py-120">
       <img
@@ -14,19 +17,16 @@ const FooterOne = () => {
           <div className="footer-item">
             <div className="footer-item__logo">
               <Link to="/">
-                {" "}
-                <img src="/assets/images/logo/logo.png" alt="" />
+                <img src="/assets/images/logo/logo.png" alt="MerrBio Logo" />
               </Link>
             </div>
-            <p className="mb-24">
-              We're MerrBio, an innovative team of food supliers.
-            </p>
+            <p className="mb-24">{t("footer.description")}</p>
             <div className="flex-align gap-16 mb-16">
               <span className="w-32 h-32 flex-center rounded-circle bg-main-600 text-white text-md flex-shrink-0">
                 <i className="ph-fill ph-map-pin" />
               </span>
-              <span className="text-md text-gray-900 ">
-                21 Tirana, Tirana, Albania
+              <span className="text-md text-gray-900">
+                {t("footer.address")}
               </span>
             </div>
             <div className="flex-align gap-16 mb-16">
@@ -40,7 +40,7 @@ const FooterOne = () => {
                 >
                   +00 123 456 789
                 </Link>
-                <span className="text-md text-main-600 ">or</span>
+                <span className="text-md text-main-600">{t("footer.or")}</span>
                 <Link
                   to="/tel:+00987654012"
                   className="text-md text-gray-900 hover-text-main-600"
@@ -62,11 +62,13 @@ const FooterOne = () => {
             </div>
           </div>
           <div className="footer-item">
-            <h6 className="footer-item__title">Information</h6>
+            <h6 className="footer-item__title">
+              {t("footer.sections.information")}
+            </h6>
             <ul className="footer-menu">
               <li className="mb-16">
                 <Link to="/about" className="text-gray-600 hover-text-main-600">
-                  About Us
+                  {t("footer.sections.about")}
                 </Link>
               </li>
               <li className="mb-16">
@@ -74,48 +76,52 @@ const FooterOne = () => {
                   to="/privacy-policy"
                   className="text-gray-600 hover-text-main-600"
                 >
-                  Privacy Policy
+                  {t("footer.sections.privacyPolicy")}
                 </Link>
               </li>
               <li className="mb-16">
                 <Link to="/shop" className="text-gray-600 hover-text-main-600">
-                  Shop
+                  {t("footer.sections.shop")}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="footer-item">
-            <h6 className="footer-item__title">Customer Support</h6>
+            <h6 className="footer-item__title">
+              {t("footer.sections.customerSupport")}
+            </h6>
             <ul className="footer-menu">
               <li className="mb-16">
                 <Link
                   to="/contact"
                   className="text-gray-600 hover-text-main-600"
                 >
-                  Contact Us
+                  {t("footer.sections.contact")}
                 </Link>
               </li>
               <li className="mb-16">
                 <Link to="/blog" className="text-gray-600 hover-text-main-600">
-                  Blog
+                  {t("footer.sections.blog")}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="footer-item">
-            <h6 className="footer-item__title">My Account</h6>
+            <h6 className="footer-item__title">
+              {t("footer.sections.myAccount")}
+            </h6>
             <ul className="footer-menu">
               <li className="mb-16">
                 <Link
                   to="/account"
                   className="text-gray-600 hover-text-main-600"
                 >
-                  My Account
+                  {t("footer.sections.myAccount")}
                 </Link>
               </li>
               <li className="mb-16">
                 <Link to="/cart" className="text-gray-600 hover-text-main-600">
-                  Shopping Cart
+                  {t("footer.sections.shoppingCart")}
                 </Link>
               </li>
               <li className="mb-16">
@@ -123,12 +129,12 @@ const FooterOne = () => {
                   to="/checkout"
                   className="text-gray-600 hover-text-main-600"
                 >
-                  Checkout
+                  {t("footer.sections.checkout")}
                 </Link>
               </li>
               <li className="mb-16">
                 <Link to="/login" className="text-gray-600 hover-text-main-600">
-                  Login
+                  {t("footer.sections.login")}
                 </Link>
               </li>
               <li className="mb-16">
@@ -136,17 +142,17 @@ const FooterOne = () => {
                   to="/register"
                   className="text-gray-600 hover-text-main-600"
                 >
-                  Register
+                  {t("footer.sections.register")}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="footer-item">
-            <h6 className="footer-item__title">Shop</h6>
+            <h6 className="footer-item__title">{t("footer.sections.shop")}</h6>
             <ul className="footer-menu">
               <li className="mb-16">
                 <Link to="/shop" className="text-gray-600 hover-text-main-600">
-                  All Products
+                  {t("footer.sections.allProducts")}
                 </Link>
               </li>
               <li className="mb-16">
@@ -154,20 +160,28 @@ const FooterOne = () => {
                   to="/product-details"
                   className="text-gray-600 hover-text-main-600"
                 >
-                  Product Details
+                  {t("footer.sections.productDetails")}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="footer-item">
-            <h6 className="">Shop on The Go</h6>
-            <p className="mb-16">MerrBio App is available. Get it now</p>
+            <h6 className="">{t("footer.mobile.title")}</h6>
+            <p className="mb-16">{t("footer.mobile.description")}</p>
             <div className="flex-align gap-8 my-32">
               <Link to="/https://www.apple.com/store" className="">
-                <img className="rounded" src="/assets/images/thumbs/store-img1.png" alt="" />
+                <img
+                  className="rounded"
+                  src="/assets/images/thumbs/store-img1.png"
+                  alt=""
+                />
               </Link>
               <Link to="/https://play.google.com/store/apps?hl=en" className="">
-                <img className="rounded" src="/assets/images/thumbs/store-img2.png" alt="" />
+                <img
+                  className="rounded"
+                  src="/assets/images/thumbs/store-img2.png"
+                  alt=""
+                />
               </Link>
             </div>
             <ul className="flex-align gap-16">

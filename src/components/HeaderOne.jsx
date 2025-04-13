@@ -4,9 +4,12 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery, useGetProductsQuery } from "../slices/apiSlice";
 import debounce from "lodash/debounce";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const HeaderOne = () => {
+  const { t, i18n } = useTranslation();
   const { userInfo } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
   const [scroll, setScroll] = useState(false);
 
   const { data: categories, isLoading, isError } = useGetCategoriesQuery();
@@ -32,8 +35,9 @@ const HeaderOne = () => {
 
   // Set the default language
   const [selectedLanguage, setSelectedLanguage] = useState("Eng");
-  const handleLanguageChange = (language) => {
-    setSelectedLanguage(language);
+  const handleLanguageChange = (lang) => {
+    i18n.changeLanguage(lang);
+    setSelectedLanguage(lang === "en" ? "Eng" : "Alb");
   };
 
   // Set the default currency
@@ -104,6 +108,12 @@ const HeaderOne = () => {
       setDebouncedTerm("");
     }
   };
+
+  // Update the cartQuantity calculation to sum all item quantities
+  const cartQuantity = cartItems.reduce(
+    (acc, item) => acc + (item.qty || 0),
+    0
+  );
 
   return (
     <>
@@ -276,7 +286,7 @@ const HeaderOne = () => {
                   to="/about"
                   className="text-white text-sm hover-text-decoration-underline"
                 >
-                  About us
+                  {t("header.about")}
                 </Link>
               </li>
 
@@ -285,7 +295,7 @@ const HeaderOne = () => {
                   to="/privacy-policy"
                   className="text-white text-sm hover-text-decoration-underline"
                 >
-                  Privacy Policy
+                  {t("header.privacy")}
                 </Link>
               </li>
             </ul>
@@ -300,11 +310,11 @@ const HeaderOne = () => {
                     <Link
                       to="#"
                       className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                      onClick={() => handleLanguageChange("English")}
+                      onClick={() => handleLanguageChange("en")}
                     >
                       <img
                         src="/assets/images/thumbs/flag1.png"
-                        alt=""
+                        alt="English"
                         className="w-16 h-12 rounded-4 border border-gray-100"
                       />
                       En
@@ -314,14 +324,14 @@ const HeaderOne = () => {
                     <Link
                       to="#"
                       className="hover-bg-gray-100 text-gray-500 text-xs py-6 px-16 flex-align gap-8 rounded-0"
-                      onClick={() => handleLanguageChange("Japan")}
+                      onClick={() => handleLanguageChange("sq")}
                     >
                       <img
                         src="/assets/images/thumbs/flag2.png"
-                        alt=""
+                        alt="Albanian"
                         className="w-16 h-12 rounded-4 border border-gray-100"
                       />
-                      Al
+                      Alb
                     </Link>
                   </li>
                 </ul>
@@ -336,7 +346,7 @@ const HeaderOne = () => {
                     <i className="ph ph-user-circle" />
                   </span>
                   <span className="hover-text-decoration-underline">
-                    {userInfo ? "My Account" : "Login"}
+                    {userInfo ? t("header.myAccount") : t("header.login")}
                   </span>
                 </Link>
               </li>
@@ -437,26 +447,16 @@ const HeaderOne = () => {
                     <i className="ph ph-magnifying-glass" />
                   </span>
                 </button>
-                <Link to="/cart" className="flex-align gap-4 item-hover">
-                  <span className="text-2xl text-gray-700 d-flex position-relative me-6 mt-6 item-hover__text">
-                    <i className="ph ph-heart" />
-                    <span className="w-16 h-16 flex-center rounded-circle bg-main-600 text-white text-xs position-absolute top-n6 end-n4">
-                      2
-                    </span>
-                  </span>
-                  <span className="text-md text-gray-500 item-hover__text d-none d-lg-flex">
-                    Wishlist
-                  </span>
-                </Link>
+
                 <Link to="/cart" className="flex-align gap-4 item-hover">
                   <span className="text-2xl text-gray-700 d-flex position-relative me-6 mt-6 item-hover__text">
                     <i className="ph ph-shopping-cart-simple" />
                     <span className="w-16 h-16 flex-center rounded-circle bg-main-600 text-white text-xs position-absolute top-n6 end-n4">
-                      2
+                      {cartQuantity}
                     </span>
                   </span>
                   <span className="text-md text-gray-500 item-hover__text d-none d-lg-flex">
-                    Cart
+                    {t("header.cart")}
                   </span>
                 </Link>
               </div>
@@ -543,7 +543,7 @@ const HeaderOne = () => {
                       All
                     </Link>
                   </li>
-                  {categories?.categories?.slice(0, 10).map((category) => (
+                  {categories?.categories?.slice(0, 15).map((category) => (
                     <li
                       key={category.id}
                       className="on-hover-item nav-menu__item d-lg-block d-none"
@@ -583,26 +583,16 @@ const HeaderOne = () => {
                       <i className="ph ph-magnifying-glass" />
                     </span>
                   </button>
-                  <Link to="/cart" className="flex-align gap-4 item-hover">
-                    <span className="text-2xl text-gray-700 d-flex position-relative me-6 mt-6 item-hover__text">
-                      <i className="ph ph-heart" />
-                      <span className="w-16 h-16 flex-center rounded-circle bg-main-600 text-white text-xs position-absolute top-n6 end-n4">
-                        2
-                      </span>
-                    </span>
-                    <span className="text-md text-gray-500 item-hover__text d-none d-lg-flex">
-                      Wishlist
-                    </span>
-                  </Link>
+
                   <Link to="/cart" className="flex-align gap-4 item-hover">
                     <span className="text-2xl text-gray-700 d-flex position-relative me-6 mt-6 item-hover__text">
                       <i className="ph ph-shopping-cart-simple" />
                       <span className="w-16 h-16 flex-center rounded-circle bg-main-600 text-white text-xs position-absolute top-n6 end-n4">
-                        2
+                        {cartQuantity}
                       </span>
                     </span>
                     <span className="text-md text-gray-500 item-hover__text d-none d-lg-flex">
-                      Cart
+                      {t("header.cart")}
                     </span>
                   </Link>
                 </div>

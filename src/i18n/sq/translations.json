@@ -1,0 +1,173 @@
+{
+  "header": {
+    "about": "Rreth nesh",
+    "privacy": "Politika e privatësisë",
+    "myAccount": "Llogaria ime",
+    "login": "Hyr",
+    "search": {
+      "placeholder": "Kërko për një produkt ose markë",
+      "searching": "Duke kërkuar...",
+      "noResults": "Nuk u gjetën produkte",
+      "button": "Kërko"
+    },
+    "wishlist": "Lista e dëshirave",
+    "cart": "Shporta",
+    "categories": "Kategoritë",
+    "menu": {
+      "home": "Kryefaqja",
+      "all": "Të gjitha",
+      "contact": "Na kontaktoni"
+    },
+    "phone": "01- 234 567 890"
+  },
+  "banner": {
+    "title": "Porosit Ushqime të Përditshme dhe Merr Dërgesë Express",
+    "exploreButton": "Eksploro Dyqanin"
+  },
+  "promotional": {
+    "meat": "Mish i Freskët Çdo Ditë",
+    "vegetables": "Perime të Freskëta Çdo Ditë",
+    "milk": "Qumësht i Freskët Çdo Ditë",
+    "fruits": "Fruta të Freskëta Çdo Ditë",
+    "shopNow": "Blej Tani"
+  },
+  "recommended": {
+    "title": "Rekomanduar për ju",
+    "qty": "/Copë",
+    "addToCart": "Shto",
+    "unavailable": "I Padisponueshëm"
+  },
+  "footer": {
+    "description": "Ne jemi MerrBio, një ekip inovativ i furnizuesve të ushqimit.",
+    "address": "21 Tiranë, Tiranë, Shqipëri",
+    "or": "ose",
+    "email": "support24@merrbio.com",
+    "sections": {
+      "information": "Informacion",
+      "about": "Rreth Nesh",
+      "privacyPolicy": "Politika e Privatësisë",
+      "shop": "Dyqan",
+      "customerSupport": "Mbështetja e Klientit",
+      "contact": "Na Kontaktoni",
+      "blog": "Blog",
+      "myAccount": "Llogaria Ime",
+      "shoppingCart": "Shporta e Blerjeve",
+      "checkout": "Checkout",
+      "login": "Hyr",
+      "register": "Regjistrohu",
+      "allProducts": "Të Gjitha Produktet",
+      "productDetails": "Detajet e Produktit"
+    },
+    "mobile": {
+      "title": "Blini në Lëvizje",
+      "description": "Aplikacioni MerrBio është i disponueshëm. Merreni tani"
+    },
+    "bottom": {
+      "copyright": "MerrBio eCommerce © {{year}}. Të Gjitha të Drejtat të Rezervuara nga NOENTRY TEAM!"
+    }
+  },
+  "shop": {
+    "noProducts": {
+      "title": "Nuk u Gjetën Produkte",
+      "description": "Nuk gjetëm produkte që përputhen me kriteret tuaja.",
+      "button": "Shiko Të Gjitha Produktet"
+    },
+    "filter": {
+      "categories": "Kategoritë e Produkteve",
+      "byPrice": "Filtro sipas Çmimit",
+      "priceRange": "Intervali: €{{min}} - €{{max}}",
+      "filterButton": "Filtro",
+      "resetButton": "Rivendos",
+      "sortBy": "Rendit sipas:",
+      "showing": "Duke shfaqur {{count}} rezultate",
+      "showing_plural": "Duke shfaqur {{count}} rezultate",
+      "sorting": {
+        "popular": "Popullore",
+        "latest": "Më të fundit",
+        "aToZ": "Emri (A-Z)",
+        "zToA": "Emri (Z-A)"
+      }
+    },
+    "product": {
+      "addToCart": "Shto në Shportë",
+      "ratings": "{{rating}} ({{count}}k)"
+    }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Mirë se u kthyet",
+      "enterCredentials": "Vendosni kredencialet tuaja për të vazhduar",
+      "email": "Adresa e emailit",
+      "password": "Fjalëkalimi",
+      "signingIn": "Duke hyrë...",
+      "signIn": "Hyr",
+      "noAccount": "Nuk keni llogari?",
+      "signUp": "Regjistrohu",
+      "errors": {
+        "failed": "Hyrja dështoi"
+      }
+    },
+    "register": {
+      "title": "Krijo Llogari",
+      "subtitle": "Bashkohu me komunitetin tonë sot",
+      "username": "Emri i përdoruesit",
+      "email": "Adresa e emailit",
+      "password": "Fjalëkalimi",
+      "confirmPassword": "Konfirmo Fjalëkalimin",
+      "asFarmer": "Regjistrohu si Fermer",
+      "terms": "Duke krijuar një llogari, ju pranoni",
+      "termsLink": "Kushtet",
+      "and": "dhe",
+      "privacyLink": "Politikën e Privatësisë",
+      "createAccount": "Krijo Llogari",
+      "creatingAccount": "Duke krijuar llogarinë...",
+      "haveAccount": "Keni tashmë një llogari?",
+      "signIn": "Hyr",
+      "errors": {
+        "passwordMatch": "Fjalëkalimet nuk përputhen",
+        "failed": "Regjistrimi dështoi"
+      }
+    }
+  },
+  "product": {
+    "details": {
+      "sku": "SKU",
+      "starRating": "Vlerësimi me yje",
+      "reviews": "vlerësime",
+      "daysAgo": "Ditë më parë",
+      "greatProduct": "Produkt i Shkëlqyer",
+      "monthlyEmi": "EMI Mujore USD {{amount}}",
+      "shippingCharge": "Tarifa e Transportit",
+      "securityPrivacy": "Siguria & Privatësia",
+      "requestInfo": "Kërko më shumë Informacion",
+      "safeCheckout": "100% Garanci për Pagesë të Sigurt",
+      "totalStock": "Stoku Total",
+      "buyNow": "Blij Tani",
+      "addToCart": "Shto në Shportë",
+      "soldBy": "Shitur nga:",
+      "shipFrom": "Dërgohet nga",
+      "description": {
+        "title": "Përshkrimi i Produktit",
+        "madeIn": "Prodhuar në SHQIPËRI",
+        "readyToEat": "Gati për t'u Ngrënë!"
+      },
+      "specifications": {
+        "title": "Specifikimet e Produktit",
+        "productType": "Lloji i Produktit",
+        "productName": "Emri i Produktit",
+        "brand": "Marka",
+        "itemCode": "Kodi i Artikullit"
+      },
+      "nutrition": {
+        "title": "Të Dhënat Ushqyese",
+        "facts": {
+          "totalFat": "Yndyrna Totale 10g 13%",
+          "saturatedFat": "Yndyrna të Ngopura 1.5g 7%",
+          "cholesterol": "Kolesterol 0mg 0%",
+          "sodium": "Natrium 170mg 7%",
+          "potassium": "Kalium 350mg 6%"
+        }
+      }
+    }
+  }
+}

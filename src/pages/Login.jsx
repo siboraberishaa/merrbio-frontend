@@ -5,9 +5,11 @@ import { useLoginMutation } from "../slices/apiSlice";
 import { setCredentials } from "../slices/authSlice";
 import ScrollToTop from "react-scroll-to-top";
 import ColorInit from "../helper/ColorInit";
+import { useTranslation } from "react-i18next";
 import "../styles/auth.css";
 
 const Login = () => {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -33,7 +35,7 @@ const Login = () => {
       dispatch(setCredentials({ ...res }));
       navigate("/");
     } catch (err) {
-      setError(err?.data?.message || "Login failed");
+      setError(err?.data?.message || t("auth.login.errors.failed"));
     }
   };
 
@@ -63,8 +65,8 @@ const Login = () => {
         <div className="auth-right">
           <div className="login-container">
             <div className="login-header">
-              <h2>Welcome back</h2>
-              <p>Enter your credentials to continue</p>
+              <h2>{t("auth.login.welcome")}</h2>
+              <p>{t("auth.login.enterCredentials")}</p>
             </div>
 
             <form className="login-form" onSubmit={handleSubmit}>
@@ -82,7 +84,7 @@ const Login = () => {
                   type="email"
                   name="email"
                   className="auth-input"
-                  placeholder="Email address"
+                  placeholder={t("auth.login.email")}
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -94,7 +96,7 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   className="auth-input"
-                  placeholder="Password"
+                  placeholder={t("auth.login.password")}
                   value={formData.password}
                   onChange={handleChange}
                   required
@@ -110,22 +112,13 @@ const Login = () => {
                 </button>
               </div>
 
-              <div className="form-footer">
-                <div className="remember-me">
-                  <input type="checkbox" id="remember" />
-                  <label htmlFor="remember">Remember me</label>
-                </div>
-                <Link to="#" className="forgot-link">
-                  Forgot password?
-                </Link>
-              </div>
-
               <button type="submit" className="submit-btn" disabled={isLoading}>
-                {isLoading ? "Signing in..." : "Sign in"}
+                {isLoading ? t("auth.login.signingIn") : t("auth.login.signIn")}
               </button>
 
               <p className="signup-text">
-                Don't have an account? <Link to="/register">Sign up</Link>
+                {t("auth.login.noAccount")}{" "}
+                <Link to="/register">{t("auth.login.signUp")}</Link>
               </p>
             </form>
           </div>

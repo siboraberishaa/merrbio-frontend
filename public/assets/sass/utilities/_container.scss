@@ -1,0 +1,29 @@
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--bs-gutter-x, 0.75rem);
+  padding-left: var(--bs-gutter-x, 0.75rem);
+  overflow-x: hidden;
+  max-width: 100%;
+
+  @include md-screen {
+    max-width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  &-lg {
+    max-width: min(100%, 1680px);
+
+    @include xl-screen {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+  }
+}
+
+// Fix for nested containers
+.container .container {
+  padding: 0;
+}

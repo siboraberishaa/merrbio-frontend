@@ -1,0 +1,173 @@
+{
+  "header": {
+    "about": "About us",
+    "privacy": "Privacy Policy",
+    "myAccount": "My Account",
+    "login": "Login",
+    "search": {
+      "placeholder": "Search for a product or brand",
+      "searching": "Searching...",
+      "noResults": "No products found",
+      "button": "Search"
+    },
+    "wishlist": "Wishlist",
+    "cart": "Cart",
+    "categories": "Categories",
+    "menu": {
+      "home": "Home",
+      "all": "All",
+      "contact": "Contact Us"
+    },
+    "phone": "01- 234 567 890"
+  },
+  "banner": {
+    "title": "Daily Grocery Order and Get Express Delivery",
+    "exploreButton": "Explore Shop"
+  },
+  "promotional": {
+    "meat": "Everyday Fresh Meat",
+    "vegetables": "Daily Fresh Vegetables",
+    "milk": "Everyday Fresh Milk",
+    "fruits": "Everyday Fresh Fruits",
+    "shopNow": "Shop Now"
+  },
+  "recommended": {
+    "title": "Recommended for you",
+    "qty": "/Qty",
+    "addToCart": "Add To Cart",
+    "unavailable": "Unavailable"
+  },
+  "footer": {
+    "description": "We're MerrBio, an innovative team of food supliers.",
+    "address": "21 Tirana, Tirana, Albania",
+    "or": "or",
+    "email": "support24@merrbio.com",
+    "sections": {
+      "information": "Information",
+      "about": "About Us",
+      "privacyPolicy": "Privacy Policy",
+      "shop": "Shop",
+      "customerSupport": "Customer Support",
+      "contact": "Contact Us",
+      "blog": "Blog",
+      "myAccount": "My Account",
+      "shoppingCart": "Shopping Cart",
+      "checkout": "Checkout",
+      "login": "Login",
+      "register": "Register",
+      "allProducts": "All Products",
+      "productDetails": "Product Details"
+    },
+    "mobile": {
+      "title": "Shop on The Go",
+      "description": "MerrBio App is available. Get it now"
+    },
+    "bottom": {
+      "copyright": "MerrBio eCommerce © {{year}}. All Rights Reserved BY NOENTRY TEAM!"
+    }
+  },
+  "shop": {
+    "noProducts": {
+      "title": "No Products Found",
+      "description": "We couldn't find any products matching your criteria.",
+      "button": "View All Products"
+    },
+    "filter": {
+      "categories": "Product Categories",
+      "byPrice": "Filter by Price",
+      "priceRange": "Range: €{{min}} - €{{max}}",
+      "filterButton": "Filter",
+      "resetButton": "Reset",
+      "sortBy": "Sort by:",
+      "showing": "Showing {{count}} result",
+      "showing_plural": "Showing {{count}} results",
+      "sorting": {
+        "popular": "Popular",
+        "latest": "Latest",
+        "aToZ": "Name (A-Z)",
+        "zToA": "Name (Z-A)"
+      }
+    },
+    "product": {
+      "addToCart": "Add To Cart",
+      "ratings": "{{rating}} ({{count}}k)"
+    }
+  },
+  "auth": {
+    "login": {
+      "welcome": "Welcome back",
+      "enterCredentials": "Enter your credentials to continue",
+      "email": "Email address",
+      "password": "Password",
+      "signingIn": "Signing in...",
+      "signIn": "Sign in",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "errors": {
+        "failed": "Login failed"
+      }
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join our community today",
+      "username": "Username",
+      "email": "Email address",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "asFarmer": "Register as Farmer",
+      "terms": "By creating an account, you agree to our",
+      "termsLink": "Terms",
+      "and": "and",
+      "privacyLink": "Privacy Policy",
+      "createAccount": "Create Account",
+      "creatingAccount": "Creating Account...",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "errors": {
+        "passwordMatch": "Passwords do not match",
+        "failed": "Registration failed"
+      }
+    }
+  },
+  "product": {
+    "details": {
+      "sku": "SKU",
+      "starRating": "Star Rating",
+      "reviews": "reviews",
+      "daysAgo": "Days ago",
+      "greatProduct": "Great Product",
+      "monthlyEmi": "Monthly EMI USD {{amount}}",
+      "shippingCharge": "Shipping Charge",
+      "securityPrivacy": "Security & Privacy",
+      "requestInfo": "Request More Information",
+      "safeCheckout": "100% Guarantee Safe Checkout",
+      "totalStock": "Total Stock",
+      "buyNow": "Buy Now",
+      "addToCart": "Add To Cart",
+      "soldBy": "Sold by:",
+      "shipFrom": "Ship from",
+      "description": {
+        "title": "Product Description",
+        "madeIn": "Made in ALBANIA",
+        "readyToEat": "Ready To Eat!"
+      },
+      "specifications": {
+        "title": "Product Specifications",
+        "productType": "Product Type",
+        "productName": "Product Name",
+        "brand": "Brand",
+        "itemCode": "Item Code"
+      },
+      "nutrition": {
+        "title": "Nutrition Facts",
+        "facts": {
+          "totalFat": "Total Fat 10g 13%",
+          "saturatedFat": "Saturated Fat 1.5g 7%",
+          "cholesterol": "Cholesterol 0mg 0%",
+          "sodium": "Sodium 170mg 7%",
+          "potassium": "Potassium 350mg 6%"
+        }
+      }
+    }
+  }
+}

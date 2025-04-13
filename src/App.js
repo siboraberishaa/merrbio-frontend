@@ -17,6 +17,9 @@ import Register from "./pages/Register";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import AboutPage from "./pages/AboutPage";
 import NotFound from "./pages/NotFound";
+import './i18n';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -51,6 +54,19 @@ function App() {
         <Route exact path="/about" element={<AboutPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </BrowserRouter>
   );
 }

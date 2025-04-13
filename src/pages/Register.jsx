@@ -6,8 +6,10 @@ import { setCredentials } from "../slices/authSlice";
 import ScrollToTop from "react-scroll-to-top";
 import ColorInit from "../helper/ColorInit";
 import "../styles/auth.css";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -35,7 +37,7 @@ const Register = () => {
     setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+      setError(t("auth.register.errors.passwordMatch"));
       return;
     }
 
@@ -50,7 +52,7 @@ const Register = () => {
       dispatch(setCredentials({ ...res }));
       navigate("/");
     } catch (err) {
-      setError(err?.data?.message || "Registration failed");
+      setError(err?.data?.message || t("auth.register.errors.failed"));
     }
   };
 
@@ -81,8 +83,8 @@ const Register = () => {
         <div className="auth-right">
           <div className="login-container">
             <div className="login-header">
-              <h2>Create Account</h2>
-              <p>Join our community today</p>
+              <h2>{t("auth.register.title")}</h2>
+              <p>{t("auth.register.subtitle")}</p>
             </div>
 
             <form className="login-form" onSubmit={handleSubmit}>
@@ -100,7 +102,7 @@ const Register = () => {
                   type="text"
                   name="name"
                   className="auth-input"
-                  placeholder="Username"
+                  placeholder={t("auth.register.username")}
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -112,7 +114,7 @@ const Register = () => {
                   type="email"
                   name="email"
                   className="auth-input"
-                  placeholder="Email address"
+                  placeholder={t("auth.register.email")}
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -124,7 +126,7 @@ const Register = () => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   className="auth-input"
-                  placeholder="Password"
+                  placeholder={t("auth.register.password")}
                   value={formData.password}
                   onChange={handleChange}
                   required
@@ -145,7 +147,7 @@ const Register = () => {
                   type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   className="auth-input"
-                  placeholder="Confirm Password"
+                  placeholder={t("auth.register.confirmPassword")}
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
@@ -173,29 +175,32 @@ const Register = () => {
                     checked={formData.is_farmer}
                     onChange={handleChange}
                   />
-                  Register as Farmer
+                  {t("auth.register.asFarmer")}
                 </label>
               </div>
 
               <div className="terms-section">
                 <small>
-                  By creating an account, you agree to our{" "}
-                  <Link style={{ color: "#299e60" }} to="#">
-                    Terms
+                  {t("auth.register.terms")}{" "}
+                  <Link style={{ color: "#299e60" }} to="/privacy-policy">
+                    {t("auth.register.termsLink")}
                   </Link>{" "}
-                  and{" "}
+                  {t("auth.register.and")}{" "}
                   <Link style={{ color: "#299e60" }} to="#">
-                    Privacy Policy
+                    {t("auth.register.privacyLink")}
                   </Link>
                 </small>
               </div>
 
               <button type="submit" className="submit-btn" disabled={isLoading}>
-                {isLoading ? "Creating Account..." : "Create Account"}
+                {isLoading
+                  ? t("auth.register.creatingAccount")
+                  : t("auth.register.createAccount")}
               </button>
 
               <p className="signup-text">
-                Already have an account? <Link to="/login">Sign in</Link>
+                {t("auth.register.haveAccount")}{" "}
+                <Link to="/login">{t("auth.register.signIn")}</Link>
               </p>
             </form>
           </div>
